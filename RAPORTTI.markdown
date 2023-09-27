@@ -37,6 +37,15 @@ Alaluvut jokaisen tehtävän raportille löydät alta.
 
 
 ## 01-TASK
+En ole käynyt ohjelmointi 2 -kurssia, eikä Java ole minulle kielenä ennalta tuttu. Työlästä oli siksi opetella Javan perusteita, mutta hyvien tutoriaalien ja opetusvideoiden (ja luentovideoiden) avulla ei tehtävä tuntunut ollenkaan mahdottomalta; lisäksi Javan rakenteen samankaltaisuus C:n kanssa helpotti paljon. Olio-ohjelmointi on tullut jonkin verran tutuksi kesätöissä, tosin SystemVerilogin parissa.
+
+Tehtävä oli mielestäni melko yksinkertainen, eikä sen suorittaminen tuottanut valtavia haasteita. Eniten aikaa käytin algoritmien toteutuksen miettimiseen ja debuggaukseen. Aikaa vei myös tutustuminen koodaritietokantaan ja sen muodostaviin tiedostoihin.
+
+Mielestäni insertionSort -algoritmin aikakompleksisuusluokka on neliöllinen huonoimmassa tapauksessa. InsertionSortissa joudutaan tekemään satunnainen määrä vertailuja, kun etsitään uudelle oliolle oikeaa paikkaa taulukossa. Kun aineiston koko kasvaa, kasvaa myös todennäköinen vertailujen määrä. Vertailujen määrän kasvaessa yksittäiselle oliolle, kasvaa aikakompleksisuus neliöllisesti.
+
+Reverse-algoritmi taas on mielestäni aikakompleksisuudeltaan lineaarinen. Reversessä vertailua ei tehdä ja olioiden paikan vaihtojen määrä kasvaa samassa suhteessa, kuin aineiston kokokin.
+
+Taulukon kääntäminen kannattaisi tehdä reverse-algoritmilla, jonka aikakompleksisuus on pienempi. Käyttämällä reverse-algoritmia, olioita ei tarvitse vertailla ollenkaan, vaan tehdään ainoastaan puolet aineiston määrästä kertaa paikanvaihtoja.
 
 ## 02-TASK
 

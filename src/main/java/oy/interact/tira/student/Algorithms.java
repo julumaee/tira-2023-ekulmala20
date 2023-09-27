@@ -9,11 +9,21 @@ public class Algorithms {
    }
 
    ///////////////////////////////////////////
+   // Swap indexes of two elements in an array
+   ///////////////////////////////////////////
+
+   public static <T> void swap(T[] array, int first, int second) {
+      T tmp = array[first];
+      array[first] = array[second];
+      array[second] = tmp;
+   }
+
+   ///////////////////////////////////////////
    // Insertion Sort for the whole array
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> void insertionSort(T[] array) {
-      // TODO: Student, implement this.
+      insertionSort(array, 0, array.length);
    }
 
    ///////////////////////////////////////////
@@ -21,7 +31,19 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T extends Comparable<T>> void insertionSort(T[] array, int fromIndex, int toIndex) {
-      // TODO: Student, implement this.
+      for (int i=fromIndex; i<toIndex; i++) {
+         T tmp = array[i];
+         int j;
+         for (j=i-1; j>=fromIndex; j--) {
+            if (array[j].compareTo(tmp) > 0) {
+               array[j+1] = array[j];
+            }
+            else {
+               break;
+            }
+         }
+         array[j+1] = tmp;
+      }
    }
 
    //////////////////////////////////////////////////////////
@@ -45,7 +67,7 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T> void reverse(T[] array) {
-      // TODO: Student, implement this.
+      reverse(array, 0, array.length);
    }
 
    ///////////////////////////////////////////
@@ -53,11 +75,13 @@ public class Algorithms {
    ///////////////////////////////////////////
 
    public static <T> void reverse(T[] array, int fromIndex, int toIndex) {
-      // TODO: Student, implement this.
+      toIndex--;
+      while (fromIndex < toIndex) {
+         swap(array, fromIndex, toIndex);
+         fromIndex++;
+         toIndex--;
+      }
    }
-
-
-
 
    ///////////////////////////////////////////
    // Binary search bw indices
