@@ -49,6 +49,91 @@ Taulukon kääntäminen kannattaisi tehdä reverse-algoritmilla, jonka aikakompl
 
 ## 02-TASK
 
+Task 02 oli mielestäni haastavuudeltaan samaa tasoa kuin task 01, eli ei kovinkaan vaikea. Toteutettavat algoritmit sai toteutettua nopeasti edellisen taskin algoritmien pohjalta. Selkeät ohjeet ja demovideo helpottivat uusien rajapintojen, comparatorin ja predicaten käyttöönottoa. Työläintä ja haastavinta oli ymmärtää mikä Comparator on ja miten sitä käytetään, mutta kuten sanottua, ohjeet ja ohjevideo olivat hyvänä apuna. Toisaalta rajapintojen käyttö oli myös opettavaisinta.
+
+Suurella koodarimäärällä (10 000) lajitteleminen koodarinimen mukaisesta järjestyksestä aakkosjärjestykseen koko nimen mukaan vie suurimman ajan (1600-1900ms). Järjestyksen kääntäminen vie joka tilanteessa todella paljon pienemmän ajan (0-1ms). Lajittelu koko nimen mukaisesta aakkosjärjestyksestä koodarinimen mukaiseen vie 450-480 ms. Lajittelu samasta järjestyksestä samaan vei suhteellisen pienen ajan (4-7 ms), mutta pidemmän kuin reverse.
+
+Järjestyksen kääntäminen vie lyhyen ajan, koska siinä vertailua olioiden välillä ei tarvitse tehdä. Reversen aikakompleksisuusluokka on lineaarinen. Kun lajittelu tehdään insertionSortilla reversen sijaan, tapahtuu lajittelussa aina olioiden vertailu, joka vie aikaa. Tästä johtuu ero kahdessa tilanteessa, nopeassa ja hitaassa. Kolmas tilanne on se, jolloin lajittelu tehdään valmiiksi lajitellulle taulukolle. Myös se vie enemmän aikaa kuin reverse, mutta nyt algoritmin tarvitsee verrata jokaista alkiota vaan seuraavaan, eikä niiden paikkoja muuteta.
+
+Yleisesti jos järjestys pitää kääntää, se kannattaisi tehdä reverse-algoritmilla, jonka aikakompleksisuus on pienempi. Käyttämällä reverse-algoritmia, olioita ei tarvitse vertailla ollenkaan, vaan tehdään ainoastaan puolet aineiston määrästä kertaa paikanvaihtoja. Reversen aikakompleksisuus on O(n), kun taas insertionSortilla se on O(n^2).
+
+Add algoritmin aikakompleksisuusluokka on koodin perusteella mielestäni lineaarinen. Algoritmi käy jokaisen lisäyksen yhteydessä koko taulukon läpi tarkistaen, ettei listalla vielä ole lisättävää alkiota. Taulukon koon kasvaessa tarvittavien tarkistusten määrä siis kasvaa samassa suhteessa. Kuvaajasta nähdään kuitenkin täyttöajan kasvun seuraavan toisen asteen yhtälöä, eli se on neliöllinen. Täyttöajan kasvun aikakompleksisuus ei ole sama kuin lisäysalgoritmin. Täytettäessä taulukkoa lisäysalgoritmilla, täytyy jokaisen lisäyksen yhteydessä käydä koko taulukko läpi ja verrata alkoita yksi kerrallaan. Yhden alkion lisäämisen aikakompleksisuus on siis lineaarinen. Kun lisäyksiä tehdään N määrä, joudutaan taulukko käymään läpi N määrä kertoja. Täyttöajan aikakompleksisuudeksi saadaan siis O(n^2) eli se on neliöllinen (worst case).
+![Täyttöaika suhteessa n:n kokoon](image-4.png)
+
+Hakualgoritmien aikakompleksisuusluokka on lineaarinen. Algoritmeissä käydään taulukko läpi yksi kerrallaan ja tehdään vertailu haettavan alkion ja taulukon alkioiden välillä, kunnes haettu alkio löytyy (tai ei löydy). Alkioiden määrän kasvaessa kasvaa yhteen hakuun tarvittavien vertailujen määrä samassa suhteessa (worst case). Alla oleva kuvaaja kuvaa hakuaikaa suhteessa aineiston kokoon ja siitä voidaan nähdä ajan nousevan lineaarisesti aineiston koon kasvaessa. Big O notaatiolla esitettynä hakualgoritmien aikakompleksisuus on O(n).
+![Hakuaika suhteessa n:n kokoon](image-5.png)
+
+
+
+Data:
+```
+n		Fill	Search	Total
+500		15		1357	1372
+1000	18		480		498
+1500	5		523		528
+2000	7		675		682
+2500	17		814		831
+3000	16		311		327
+3500	22		497		519
+4000	26		122		148
+4500	37		126		163
+5000	47		139		186
+5500	55		173		228
+6000	66		256		322
+6500	84		217		301
+7000	92		235		327
+7500	103		424		527
+8000	124		333		457
+8500	143		367		510
+9000	160		310		470
+9500	176		289		465
+10000	193		309		502
+10500	192		325		517
+11000	218		338		556
+11500	240		359		599
+12000	242		371		613
+12500	277		389		666
+13000	296		464		760
+13500	318		418		736
+14000	346		489		835
+14500	375		447		822
+15000	400		476		876
+15500	425		476		901
+16000	434		491		925
+16500	478		506		984
+17000	523		523		1046
+17500	563		600		1163
+18000	580		548		1128
+18500	676		609		1285
+19000	635		568 	1203
+19500	704		603		1307
+20000	717		620		1337
+20500	740		634		1374
+21000	769		650		1419
+21500	815		662		1477
+22000	833		677		1510
+22500	887		962		1849
+23000	932		709		1641
+23500	953		732		1685
+24000	1017	968		1985
+24500	1064	775		1839
+25000	985		639		1624
+25500	1213	794		2007
+26000	1181	843		2024
+26500	1232	825		2057
+27000	1342	1836	3178
+27500	1322	876		2198
+28000	1400	877		2277
+28500	1442	889		2331
+29000	1473	1052	2525
+29500	1520	928		2448
+30000	1575	861		2436
+30500	1650	1051	2701
+31000	1704	982		2686
+31500	1748	1011	2759
+32000	1826	1004	2830
+```
+
 ## 03-TASK
 
 ## 04-TASK
