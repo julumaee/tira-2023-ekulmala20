@@ -60,7 +60,7 @@ Yleisesti jos järjestys pitää kääntää, se kannattaisi tehdä reverse-algo
 Add algoritmin aikakompleksisuusluokka on koodin perusteella mielestäni lineaarinen. Algoritmi käy jokaisen lisäyksen yhteydessä koko taulukon läpi tarkistaen, ettei listalla vielä ole lisättävää alkiota. Taulukon koon kasvaessa tarvittavien tarkistusten määrä siis kasvaa samassa suhteessa. Kuvaajasta nähdään kuitenkin täyttöajan kasvun seuraavan toisen asteen yhtälöä, eli se on neliöllinen. Täyttöajan kasvun aikakompleksisuus ei ole sama kuin lisäysalgoritmin. Täytettäessä taulukkoa lisäysalgoritmilla, täytyy jokaisen lisäyksen yhteydessä käydä koko taulukko läpi ja verrata alkoita yksi kerrallaan. Yhden alkion lisäämisen aikakompleksisuus on siis lineaarinen. Kun lisäyksiä tehdään N määrä, joudutaan taulukko käymään läpi N määrä kertoja. Täyttöajan aikakompleksisuudeksi saadaan siis O(n^2) eli se on neliöllinen (worst case).
 ![Täyttöaika suhteessa n:n kokoon](image-4.png)
 
-Hakualgoritmien aikakompleksisuusluokka on lineaarinen. Algoritmeissä käydään taulukko läpi yksi kerrallaan ja tehdään vertailu haettavan alkion ja taulukon alkioiden välillä, kunnes haettu alkio löytyy (tai ei löydy). Alkioiden määrän kasvaessa kasvaa yhteen hakuun tarvittavien vertailujen määrä samassa suhteessa (worst case). Alla oleva kuvaaja kuvaa hakuaikaa suhteessa aineiston kokoon ja siitä voidaan nähdä ajan nousevan lineaarisesti aineiston koon kasvaessa. Big O notaatiolla esitettynä hakualgoritmien aikakompleksisuus on O(n).
+Hakualgoritmien aikakompleksisuusluokka on lineaarinen O(n). Algoritmeissä käydään taulukko läpi yksi kerrallaan ja tehdään vertailu haettavan alkion ja taulukon alkioiden välillä, kunnes haettu alkio löytyy (tai ei löydy). Alkioiden määrän kasvaessa kasvaa yhteen hakuun tarvittavien vertailujen määrä samassa suhteessa (worst case). Alla oleva kuvaaja kuvaa hakuaikaa suhteessa aineiston kokoon ja siitä voidaan nähdä ajan nousevan lineaarisesti aineiston koon kasvaessa. Big O notaatiolla esitettynä hakualgoritmien aikakompleksisuus on O(f(n)).
 ![Hakuaika suhteessa n:n kokoon](image-5.png)
 
 
@@ -135,6 +135,33 @@ n		Fill	Search	Total
 ```
 
 ## 03-TASK
+
+Mielestämni task 3 oli suunnilleen samaa vaikeustasoa kuin kaksi aiempaa tehtävää, joskin käytin siihen ehkä hieman enemmän aikaa kuin aiempiin. Opin tehtävää tehdessä ja luentovideoiden kautta, mitä ovat iteratiivinen ja rekursiivinen binäärinen haku ja mikä on binäärisen hakumenetelmän aikakompleksisuusluokka. Eniten aikaa käytin "bugin" etsimiseen, jota ei lopulta ollutkaan vaan toteutukseni olikin toimiva. 
+
+Toteutin algoritmeihin sekä rekursiivisen että iteratiivisen haun, toinen on kommenteissa.
+
+Kun haetaan taulukon loppupäästä 50 000 koodarin aineistolla, on hakuaika yleensä n. 30 ms luokkaa. Nopealla haulla hakuaika on 0-1 ms, yleensä 0 ms. Hakuaika nopealla haulla on siis keskimäärin mitätön verrattuna ensimmäiseen hakuun. Listan alkupäästä haettaessa hakuaika lyhenee, esimerkiksi nimellä "Hulmi" haku kestää vain 15 ms, nopea haku koko nimellä 0 ms. Taulukon aivan alkupäästä haettaessa hakuaika on molemmilla hauilla mitätön (0 ms lokin mukaan). Pienillä aineistoilla normaalilla haulla hakuaika lyhenee, esim. 5000 koodarin aineistolla loppupään haku kestää n. 15-19 ms ja nopealla hauöa se on edelleen n. 0 ms.
+
+Nopea haku käyttää puolitushakua, jonka hakuaika on aineiston koosta riippumaton (näin pienillä aineistoilla). Todellisuudessa nopean haun (binäärisen haun) hakuaika on logaritminen, mutta max. 50 000 aineistolla aika on koko ajan 0 ms. Tämä nähdään myös alla olevista taulukoista. Tämän vuoksi haku kestää saman aikaa alkion sijainnista riippumatta, oli se sitten alkupäässä, loppupäässä tai keskellä listaa.
+
+![Hakuaika (ascending)](image-8.png)
+![Hakuaika (descending)](image-11.png)
+
+Hitaalla hakualgoritmilla hakuaika kasvaa lineaarisesti siirryttäessä listan alkupäästä loppupäähän. Tämä johtuu siitä, että hidas haku tekee vertailuoperaatiot alkioiden välillä listan alusta loppuun tai haettuun alkioon saakka. Näin ollen tarvittavien vertailujen määrä kasvaa lineaarisesti siirryttäessä listalla alkupäästä kohti loppua. Lineaarisen hakualgoritmin aikakompleksisuusluokka on O(n).
+
+Alla olevat kaaviot kuvaavat täyttöaikoja ja lajitteluaikoja testin tuottaman datan perusteella. Lajitteluaikojen ja täyttöaikojen kuvaajat mukailevat edellisen tehtävän vastaavia kuvaajia, sillä aineiston lajittelu ja täyttö tehtiin nyt samalla algoritmillä kuin edellisessä tehtävässä.
+
+![Alt text](image-6.png)
+
+![Alt text](image-7.png)
+
+![Alt text](image-9.png)
+
+![Alt text](image-10.png)
+
+Ero edelliseen tehtävään nähdään hakuaikojen kuvaajissa. Nyt hakuajan kuvaajat näyttävät aineiston koon olevan merkityksetön hakuaikaan. Todellisuudessa puolitushaun hakuaika ei kuitenkaan ole aineiston koosta riippumaton. Koodia analysoidessa nähdään, että haettavan aineiston määrä puolittuu jokaisella iteraatiolla. Tästä voidaan edelleen päätellä, että aineiston koon kaksinkertaistuassa tarvittavien iteraatioiden (vertailujen) määrä kasvaa yhdellä. Näin ollen binäärinen hakualgoritmi on aikakompleksisuudeltaan logaritminen O(log(n)). Tämän vuoksi binäärinen hakualgoritmi on tehokas suurillakin aineistomäärillä.
+
+
 
 ## 04-TASK
 
