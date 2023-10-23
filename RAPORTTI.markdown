@@ -136,7 +136,7 @@ n		Fill	Search	Total
 
 ## 03-TASK
 
-Mielestämni task 3 oli suunnilleen samaa vaikeustasoa kuin kaksi aiempaa tehtävää, joskin käytin siihen ehkä hieman enemmän aikaa kuin aiempiin. Opin tehtävää tehdessä ja luentovideoiden kautta, mitä ovat iteratiivinen ja rekursiivinen binäärinen haku ja mikä on binäärisen hakumenetelmän aikakompleksisuusluokka. Eniten aikaa käytin "bugin" etsimiseen, jota ei lopulta ollutkaan vaan toteutukseni olikin toimiva. 
+Mielestäni task 3 oli suunnilleen samaa vaikeustasoa kuin kaksi aiempaa tehtävää, joskin käytin siihen ehkä hieman enemmän aikaa kuin aiempiin. Opin tehtävää tehdessä ja luentovideoiden kautta, mitä ovat iteratiivinen ja rekursiivinen binäärinen haku ja mikä on binäärisen hakumenetelmän aikakompleksisuusluokka. Eniten aikaa käytin "bugin" etsimiseen, jota ei lopulta ollutkaan vaan toteutukseni olikin toimiva. 
 
 Toteutin algoritmeihin sekä rekursiivisen että iteratiivisen haun, toinen on kommenteissa.
 
@@ -164,6 +164,12 @@ Ero edelliseen tehtävään nähdään hakuaikojen kuvaajissa. Nyt hakuajan kuva
 
 
 ## 04-TASK
+
+Tehtävä opetti minulle, miten stack -tietorakenne toteutetaan JAVA:lla. Lisäksi opin string-tietotyypin käsittelystä javalla. Eniten haasteita tuotti alkuun pääseminen, mutta demovideo auttoi siinä. Lisäksi haastavana koin ParenthesisChecker-osion.
+
+Toteutukseni vastaa tehtävänannossa määriteltyjä aikakompleksisuusvaatimuksia, sillä stackin metodien suoritusaikaan eivät parametrit vaan suoritusaika on vakio eli vaatimusten mukainen O(1). toString metodin aikakompleksisuus on O(n), sillä siinä suoritusajan määrittää annetun taulukon pituus. Taulukon koon kasvattaminen yhdellä lisää for-silmukkaan yhden kierroksen. Aika kasvaa siis lineaarisesti. Reallokointi on aikakompleksisuudeltaan lineaarinen (O(n)), sillä myös siinä käydään taulukko kerran läpi for-silmukalla ja jälleen taulukon koon kasvattaminen kasvattaa tarvittavien toistojen määrää samassa suhteessa. Näin ollen myös push-operaatio on lineaarinen, kun joudutaan tekemään reallokointi.
+
+Jos lainausmerkit tekstissä ovat väärin, ei algoritmin sulkujenlaskenta toimi. Esimerkiksi jos teksti alkaa lainausmerkillä, eikä toista lainausmerkkiä tule, ei algoritmi laske tekstistä ollenkaan sulkuja. Algoritmi on silti oikeellinen, sillä se ei jumiudu ja suorittaa tehtävän annetun syötteen mukaan loppuun saakka. Tällöin virhe on syötteessä, ei algoritmissä.
 
 ## 05-TASK
 
