@@ -37,6 +37,7 @@ Alaluvut jokaisen tehtävän raportille löydät alta.
 
 
 ## 01-TASK
+
 En ole käynyt ohjelmointi 2 -kurssia, eikä Java ole minulle kielenä ennalta tuttu. Työlästä oli siksi opetella Javan perusteita, mutta hyvien tutoriaalien ja opetusvideoiden (ja luentovideoiden) avulla ei tehtävä tuntunut ollenkaan mahdottomalta; lisäksi Javan rakenteen samankaltaisuus C:n kanssa helpotti paljon. Olio-ohjelmointi on tullut jonkin verran tutuksi kesätöissä, tosin SystemVerilogin parissa.
 
 Tehtävä oli mielestäni melko yksinkertainen, eikä sen suorittaminen tuottanut valtavia haasteita. Eniten aikaa käytin algoritmien toteutuksen miettimiseen ja debuggaukseen. Aikaa vei myös tutustuminen koodaritietokantaan ja sen muodostaviin tiedostoihin.
@@ -46,6 +47,7 @@ Mielestäni insertionSort -algoritmin aikakompleksisuusluokka on neliöllinen hu
 Reverse-algoritmi taas on mielestäni aikakompleksisuudeltaan lineaarinen. Reversessä vertailua ei tehdä ja olioiden paikan vaihtojen määrä kasvaa samassa suhteessa, kuin aineiston kokokin.
 
 Taulukon kääntäminen kannattaisi tehdä reverse-algoritmilla, jonka aikakompleksisuus on pienempi. Käyttämällä reverse-algoritmia, olioita ei tarvitse vertailla ollenkaan, vaan tehdään ainoastaan puolet aineiston määrästä kertaa paikanvaihtoja.
+
 
 ## 02-TASK
 
@@ -134,6 +136,7 @@ n		Fill	Search	Total
 32000	1826	1004	2830
 ```
 
+
 ## 03-TASK
 
 Mielestäni task 3 oli suunnilleen samaa vaikeustasoa kuin kaksi aiempaa tehtävää, joskin käytin siihen ehkä hieman enemmän aikaa kuin aiempiin. Opin tehtävää tehdessä ja luentovideoiden kautta, mitä ovat iteratiivinen ja rekursiivinen binäärinen haku ja mikä on binäärisen hakumenetelmän aikakompleksisuusluokka. Eniten aikaa käytin "bugin" etsimiseen, jota ei lopulta ollutkaan vaan toteutukseni olikin toimiva. 
@@ -162,16 +165,25 @@ Alla olevat kaaviot kuvaavat täyttöaikoja ja lajitteluaikoja testin tuottaman 
 Ero edelliseen tehtävään nähdään hakuaikojen kuvaajissa. Nyt hakuajan kuvaajat näyttävät aineiston koon olevan merkityksetön hakuaikaan. Todellisuudessa puolitushaun hakuaika ei kuitenkaan ole aineiston koosta riippumaton. Koodia analysoidessa nähdään, että haettavan aineiston määrä puolittuu jokaisella iteraatiolla. Tästä voidaan edelleen päätellä, että aineiston koon kaksinkertaistuassa tarvittavien iteraatioiden (vertailujen) määrä kasvaa yhdellä. Näin ollen binäärinen hakualgoritmi on aikakompleksisuudeltaan logaritminen O(log(n)). Tämän vuoksi binäärinen hakualgoritmi on tehokas suurillakin aineistomäärillä.
 
 
-
 ## 04-TASK
 
 Tehtävä opetti minulle, miten stack -tietorakenne toteutetaan JAVA:lla. Lisäksi opin string-tietotyypin käsittelystä javalla. Eniten haasteita tuotti alkuun pääseminen, mutta demovideo auttoi siinä. Lisäksi haastavana koin ParenthesisChecker-osion.
 
-Toteutukseni vastaa tehtävänannossa määriteltyjä aikakompleksisuusvaatimuksia, sillä stackin metodien suoritusaikaan eivät parametrit vaan suoritusaika on vakio eli vaatimusten mukainen O(1). toString metodin aikakompleksisuus on O(n), sillä siinä suoritusajan määrittää annetun taulukon pituus. Taulukon koon kasvattaminen yhdellä lisää for-silmukkaan yhden kierroksen. Aika kasvaa siis lineaarisesti. Reallokointi on aikakompleksisuudeltaan lineaarinen (O(n)), sillä myös siinä käydään taulukko kerran läpi for-silmukalla ja jälleen taulukon koon kasvattaminen kasvattaa tarvittavien toistojen määrää samassa suhteessa. Näin ollen myös push-operaatio on lineaarinen, kun joudutaan tekemään reallokointi.
+Toteutukseni vastaa tehtävänannossa määriteltyjä aikakompleksisuusvaatimuksia, sillä stackin metodien suoritusaikaan eivät vaikuta parametrit vaan suoritusaika on vakio eli vaatimusten mukainen O(1). toString metodin aikakompleksisuus on O(n), sillä siinä suoritusajan määrittää annetun taulukon pituus. Taulukon alkioiden määrän kasvattaminen yhdellä lisää for-silmukkaan yhden kierroksen. Aika kasvaa siis lineaarisesti. Reallokointi on aikakompleksisuudeltaan lineaarinen (O(n)), sillä myös siinä käydään taulukon alkiot kerran läpi for-silmukalla ja jälleen taulukon alkioiden määrän kasvattaminen kasvattaa tarvittavien toistojen määrää samassa suhteessa. Näin ollen myös push-operaatio on lineaarinen, kun joudutaan tekemään reallokointi.
 
 Jos lainausmerkit tekstissä ovat väärin, ei algoritmin sulkujenlaskenta toimi. Esimerkiksi jos teksti alkaa lainausmerkillä, eikä toista lainausmerkkiä tule, ei algoritmi laske tekstistä ollenkaan sulkuja. Algoritmi on silti oikeellinen, sillä se ei jumiudu ja suorittaa tehtävän annetun syötteen mukaan loppuun saakka. Tällöin virhe on syötteessä, ei algoritmissä.
 
+
 ## 05-TASK
+
+Tehtävä opetti minulle jono-tietorakenteen luomisen javalla. Jonon toimintaperiaate oli minulle jo ennestään tuttu, joten sen opettelemiseen ei tarvinnut käyttää aikaa. Haasteita tuotti reallocate ja toString -metodit, joita en meinannut ensin saada menemään testeistä läpi (erityisesti printTest()). Lopulta kuitenkin pitkän debuggauksen jälkeen löysin ongelman (headin ja tailin resetointi puuttui clear() -metodissa) ja sain sen ratkaistua.
+
+Linkitettyyn listaan voidaan lisätä ja poistaa solmuja dynaamisesti tarpeen mukaan. Tämän vuoksi se voi olla muistikompleksisuudeltaan tehokkaampi kuin jono erityisesti silloin, kun ei tiedetä ennalta kuinka paljon tilaa tarvitaan. Toisaalta jos tarvittava muisti on tiedossa jo ennalta, voidaan taulukko luoda suoraan oikeaan kokoon ja tällöin se voittaa linkitetyn listan muistikompleksisuudessa.
+
+Linkitetyssä listassa alkioiden lisääminen ja poistaminen on aikakompleksisuuden kannalta tehokasta missä tahansa kohden listaa. Taulukkopohjaisessa toteutuksessa lisättäessä keskelle listaa joudutaan tekemään tiedonsiirtoa, joka ei ole aikatehokasta. Linkitetty lista voittaa siis taulukkopohjaisen ratkaisun, kun lisäyksiä tai poistoja tehdään listan keskeltä, ja taulukkopohjainen kun operoidaan taulukon reunoilla, eli esimerkiksi tässä tehtävässä toteutettu FIFO.
+
+Toteutukseni vastaa tehtävänannossa määriteltyjä aikakompleksisuusvaatimuksia, sillä jonon metodien suoritusaikaan eivät vaikuta parametrit vaan suoritusaika on vakio eli vaatimusten mukainen O(1). toString metodin aikakompleksisuus on O(n), sillä siinä suoritusajan määrittää annetun taulukon pituus. Taulukon alkioiden määrän kasvattaminen yhdellä lisää while-silmukkaan yhden kierroksen. Aika kasvaa siis lineaarisesti. Reallokointi on aikakompleksisuudeltaan lineaarinen (O(n)), sillä myös siinä käydään taulukon alkiot kerran läpi while-loopilla ja jälleen alkioiden määrän kasvattaminen kasvattaa tarvittavien toistojen määrää samassa suhteessa. Näin ollen myös lisäys-operaatio on lineaarinen, kun joudutaan tekemään reallokointi.
+
 
 ## 06-TASK
 

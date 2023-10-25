@@ -1,4 +1,4 @@
-package oy.interact.tira.util;
+package oy.interact.tira.student;
 
 import oy.interact.tira.util.StackInterface;
 
@@ -17,6 +17,7 @@ public class StackImplementation<E> implements StackInterface<E> {
 
     @Override
     public String toString() {
+        /* Converts the array to a String */
         StringBuilder builder = new StringBuilder("[");
         for (int index = 0; index <= currentIndex; index++) {
             builder.append(itemArray[index]);
@@ -29,6 +30,7 @@ public class StackImplementation<E> implements StackInterface<E> {
     }
 
     private void reAllocate(int newSize) {
+        /* Reallocates the array with the new size of parameter newSize */
         Object [] newArray = new Object [newSize];
         for (int index = 0; index<=currentIndex; index++) {
             newArray[index] = itemArray[index];
