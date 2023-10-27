@@ -183,17 +183,129 @@ public class Algorithms {
 
    }
 
-
    public static <E extends Comparable<E>> void fastSort(E [] array) {
-      // TODO: Student, implement this.
+      quickSort(array, 0, array.length, Comparator.naturalOrder());
+      // mergeSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      // heapSort(array, 0, array.length, Comparator.naturalOrder());
    }
 
    public static <E> void fastSort(E [] array, Comparator<E> comparator) {
-      // TODO: Student, implement this.
+      fastSort(array, 0, array.length, comparator);
    }
 
    public static <E> void fastSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
-      // TODO: Student, implement this.
+      quickSort(array, fromIndex, toIndex, comparator);
+      // mergeSort(array, fromIndex, toIndex - 1, comparator);
+      // heapSort(array, fromIndex, toIndex, comparator);
    }
 
+   private static <E> void quickSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      if (fromIndex < toIndex - 1) {
+         int partitionIndex = partition(array, fromIndex, toIndex, comparator);
+         quickSort(array, fromIndex, partitionIndex, comparator);
+         quickSort(array, partitionIndex + 1, toIndex, comparator);
+      }
+   }
+
+   private static <E> int partition(E [] array, int low, int high, Comparator<E> comparator) {
+      E pivot = array[high - 1];
+      int leftIndex = low - 1;
+      for (int rightIndex = low; rightIndex < high; rightIndex++) {
+         if (comparator.compare(array[rightIndex], pivot) <= 0) {
+            leftIndex++;
+            swap(array, leftIndex, rightIndex);
+         }
+      }
+      return leftIndex;
+   }
+
+   private static <E> void heapSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      toIndex--;
+      heapify(array, fromIndex, toIndex, comparator);
+      while (toIndex > fromIndex) {
+         swap(array, toIndex, fromIndex);
+         toIndex--;
+         siftDown(array, fromIndex, fromIndex, toIndex, comparator);
+      }
+   }
+
+   private static <E> void heapify(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      int startIndex = ((toIndex - fromIndex) - 1) / 2;
+         while (startIndex >= 0) {
+            siftDown(array, fromIndex, startIndex + fromIndex, toIndex, comparator);
+            startIndex--;
+         }
+   }
+
+   private static <E> void siftDown(E [] array, int fromIndex, int startIndex, int toIndex, Comparator<E> comparator) {
+      int rootNode = startIndex;
+
+      while (2 * (rootNode - fromIndex) + 1 <= toIndex - fromIndex) {
+         int childNode = 2 * (rootNode - fromIndex) + 1;
+         int swapNode = rootNode;
+         if (comparator.compare(array[swapNode], array[fromIndex + childNode]) < 0) {
+            swapNode = fromIndex + childNode;
+         }
+         if (fromIndex + childNode + 1 <= toIndex && comparator.compare(array[swapNode], array[fromIndex + childNode + 1]) < 0) {
+            swapNode = fromIndex + childNode + 1;
+         }
+         if (swapNode == rootNode) {
+            return;
+         } else {
+            swap(array, rootNode, swapNode);
+            rootNode = swapNode;
+         }
+      }
+   }
+
+
+   // NOT YET WORKING!!
+
+   @SuppressWarnings("unchecked")
+   private static <E> void mergeSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
+      if (toIndex - fromIndex < 2) {
+         return; // Array smaller than 2 is already sorted
+      }
+      int middleIndex = (toIndex + fromIndex) / 2;
+      E [] leftArray = (E []) new Comparable[middleIndex - fromIndex];
+      E [] rightArray = (E []) new Comparable[toIndex - middleIndex  - fromIndex];
+
+      for (int index = 0; index < middleIndex - fromIndex; index++) {
+         leftArray[index] = array[index + fromIndex];
+      }
+      for (int index = middleIndex; index < toIndex - fromIndex; index++) {
+         rightArray[index] = array[index + fromIndex];
+      }
+      mergeSort(leftArray, 0, leftArray.length - 1, comparator);
+      mergeSort(rightArray, 0, rightArray.length - 1, comparator);
+      merge(array, leftArray, rightArray, fromIndex, comparator);
+   }
+
+   private static <E> void merge(E [] array, E [] leftArray, E [] rightArray, int fromIndex, Comparator<E> comparator) {
+      int leftIndex = 0;
+      int rightIndex = 0;
+      int arrayIndex = fromIndex;
+
+      while (leftIndex < leftArray.length && rightIndex < rightArray.length) {
+         if (comparator.compare(leftArray[leftIndex], rightArray[rightIndex]) <= 0) {
+            array[arrayIndex] = leftArray[leftIndex];
+            arrayIndex++;
+            leftIndex++;
+         } else {
+            array[arrayIndex] = rightArray[rightIndex];
+            arrayIndex++;
+            rightIndex++;
+         }
+      }
+      while (leftIndex < leftArray.length) {
+         array[arrayIndex] = leftArray[leftIndex];
+         arrayIndex++;
+         leftIndex++;
+      }
+      while (rightIndex < rightArray.length) {
+         array[arrayIndex] = rightArray[rightIndex];
+         arrayIndex++;
+         rightIndex++;
+      }
+   }
 }

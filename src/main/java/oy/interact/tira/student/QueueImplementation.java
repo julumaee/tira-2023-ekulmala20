@@ -19,7 +19,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         /* Reallocates the array with the new size determided by parameter newSize */
         Object [] newArray = new Object [newSize];
         int newIndex = 0;
-        int counter = itemCount;
+        int counter = size();
         int index = head;
 
         while (counter > 0) {
@@ -32,7 +32,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
             newIndex++;
         }
         head = 0;
-        tail = itemCount;
+        tail = size();
         itemArray = newArray;
     }
 
@@ -41,7 +41,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         /* Converts the array to a String */
         StringBuilder builder = new StringBuilder("[");
 
-        int counter = itemCount;
+        int counter = size();
         int index = head;
         while (counter > 0) {
             builder.append(itemArray[index]);

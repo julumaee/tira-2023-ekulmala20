@@ -187,6 +187,61 @@ Toteutukseni vastaa tehtävänannossa määriteltyjä aikakompleksisuusvaatimuks
 
 ## 06-TASK
 
+Tehtävä oli mielestäni tähänastisista haastavin. Lajittelualgoritmien toimintaperiaatteiden sisäistämiseen meni jonkin aikaa, mutta luentovideot ja Youtube-tutoriaalit auttoivat. Lisäksi algoritmien havainnollistaminen kynän ja paperin avulla helpottivat ymmärtämistä. Kaikista eniten minulle tuotti vaikeuksia mergesort, jota en edelleenkään saanut menemään testeistä läpi. Yleisesti haasteita testien kanssa oli eniten indeksien kanssa. Yleinen virhe testistä oli "index 100 out of range with size 100", vaikka mielestäni toteutukseni pitäisi toimia oikein. Tähän jäin myös mergesortin kanssa. Lisäksi ongelmaa oli kekomuistin ylivuodon kanssa, johon lopulta mikään kurssilla esitetyistä ratkaisuvaihtoehdoista ei auttanut. Sain siis nopean algoritmin testit ajettua vain maksimissaan 1 000 000 kokoisella aineistolla (2 000 000 jäi suoriutumatta) ja suoritin analyysit näiden tulosten perusteella.
+
+Toteutin tehtävässä heapsort, quicksort ja mergesort -algoritmit, mutta mergesort jäi jostain syystä toimimattomaksi.
+
+Hitaan ja nopean lajittelualgoritmin nopeusero ei näy vielä kaikista pienimmällä aineistolla (n = 100), jossa hidas algoritmi suoriutui jopa paremmin kuin heapsort. Kun aineistoa kasvatetaan, alkavat erot näkyä heti selvästi ja kasvavat valtavan suureksi lajiteltaessa suurempia aineistoja (suurimpia aineistoja ei saanut lajiteltua insertionsortilla järkevässä ajassa). Tätä havainnollistavat alla olevat kuvaajat, joissa näkyvät sekä kunkin algoritmin lajitteluaika suhteessa aineiston kokoon, että yksittäisen elementin lajitteluaika suhteessa aineiston kokoon. Kuvaajista ja datasta nähdään, että nopeilla algoritmeilla pienen aineiston (n = 100) yksittäisen alkion lajittelu vei kaikista suurimman ajan. Kun aineiston kokoa kasvatetaan, ei lajitteluaika per alkio juurikaan muutu ja erittäin suurikin (1 000 000) ainesto saadaan lajiteltua tehokkaasti. 
+
+Kaavioiden ja testidatan perusteella nopeiden algoritmien aikakompleksisuusluokka näyttäisi olevan lineaarinen, sillä yksittäisen alkion lajitteluaika on kutakuinkin vakio. Tuloksista kuitenkin puuuttuu 2 000 000 alkion aineisto, joten lajitteluajan todellista kasvua erittäin suurilla aineistoilla ei tulosten perusteella nähdä. Teorian mukainen aikakompleksisuus quicksortille on keskimäärin O(n*log(n)) ja huonoimmassa tapauksessa O(n^2).Toteutukseni vastaa mielestäni tätä aikakompleksisuutta. Huonoimpaan tapaukseen joudutaan, jos taulukko on jo lajiteltu, jolloin pivot-arvoksi valikoituu taulukon suurin tai pienin arvo.
+
+Heapsortin aikakompleksisuusluokka on teorian mukaan O(n*log(n)), sekä keskimäärin että huonoimmassa tapauksessa. Tämä johtuu siitä, ettei heapsortin lajittelua hidasta taulukon alkuperäinen järjestys. Näin ollen lajitteluaika on aina "huonoin".
+
+Nopein algoritmi näyttää testidatan ja kaavioiden perusteella olevan quicksort. Quicksortilla päästiin hieman parempiin tuloksiin kuin heapsortilla, kun aineiston koko kasvoi yli 10 000. Erot algoritmien suoritusajoissa eivät kuitenkaan ole kovinkaan suuret. Kuvassa 4 on vielä esitettynä vertailu heapsortin ja quicksortin lajitteluajoista eri suuruisilla aineistoilla (1 = 100, 7 = 1 000 000).
+
+Kuten raportissa on aiemmin todettu, insertionsortin aikakompleksisuusluokka on O(n^2). Tämän vuoksi se on testidatan perusteella selkeästi hitain algoritmi.
+
+![Kuva 1. Insertion sort kaaviot](image-12.png)
+
+![Kuva 2. HeapSort kaaviot](image-13.png)
+
+![Kuva 3. QuickSort kaaviot](image-14.png)
+
+![Kuva 4. Quicksort vs Heapsort](image-15.png)
+
+Testituloksia taulukoituna:
+
+Hidas (insertionsort):	
+Test#   Count   ms      ms/element
+1		100		6		0,06
+2		1000	21		0,021
+3		5000	392		0,078
+4		10000	1416	0,142
+5		50000	110361	2,207
+6		100000	506958	5,07
+
+Heapsort:	
+Test#	Count	ms		ms/element
+1		100		7		0,07
+2		1000	5		0,005
+3		5000	18		0,004
+4		10000	51		0,005
+5		50000	268		0,005
+6		100000	449		0,004
+7		1000000	8071	0,008
+
+Quicksort:
+Test#	Count	ms     	ms/element
+1		100		4		0,04
+2		1000	7		0,007
+3		5000	22		0,004
+4		10000	22		0,002
+5		50000	132		0,003
+6		100000	335		0,003
+7		1000000	5279	0,005
+
+
+
 ## 07-TASK
 
 ## 08-TASK
