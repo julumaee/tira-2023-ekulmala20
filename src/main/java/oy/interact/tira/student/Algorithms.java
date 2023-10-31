@@ -184,8 +184,8 @@ public class Algorithms {
    }
 
    public static <E extends Comparable<E>> void fastSort(E [] array) {
-      quickSort(array, 0, array.length, Comparator.naturalOrder());
-      // mergeSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      // quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      mergeSort(array, 0, array.length - 1, Comparator.naturalOrder());
       // heapSort(array, 0, array.length, Comparator.naturalOrder());
    }
 
@@ -194,23 +194,23 @@ public class Algorithms {
    }
 
    public static <E> void fastSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
-      quickSort(array, fromIndex, toIndex, comparator);
-      // mergeSort(array, fromIndex, toIndex - 1, comparator);
+      // quickSort(array, fromIndex, toIndex - 1, comparator);
+      mergeSort(array, fromIndex, toIndex - 1, comparator);
       // heapSort(array, fromIndex, toIndex, comparator);
    }
 
-   private static <E> void quickSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
-      if (fromIndex < toIndex - 1) {
-         int partitionIndex = partition(array, fromIndex, toIndex, comparator);
-         quickSort(array, fromIndex, partitionIndex, comparator);
-         quickSort(array, partitionIndex + 1, toIndex, comparator);
+   private static <E> void quickSort(E [] array, int fromIndex, int lastIndex, Comparator<E> comparator) {
+      if (fromIndex < lastIndex) {
+         int partitionIndex = partition(array, fromIndex, lastIndex, comparator);
+         quickSort(array, fromIndex, partitionIndex - 1, comparator);
+         quickSort(array, partitionIndex + 1, lastIndex, comparator);
       }
    }
 
    private static <E> int partition(E [] array, int low, int high, Comparator<E> comparator) {
-      E pivot = array[high - 1];
+      E pivot = array[high];
       int leftIndex = low - 1;
-      for (int rightIndex = low; rightIndex < high; rightIndex++) {
+      for (int rightIndex = low; rightIndex <= high; rightIndex++) {
          if (comparator.compare(array[rightIndex], pivot) <= 0) {
             leftIndex++;
             swap(array, leftIndex, rightIndex);
@@ -258,23 +258,21 @@ public class Algorithms {
       }
    }
 
-
-   // NOT YET WORKING!!
-
    @SuppressWarnings("unchecked")
-   private static <E> void mergeSort(E [] array, int fromIndex, int toIndex, Comparator<E> comparator) {
-      if (toIndex - fromIndex < 2) {
+   private static <E> void mergeSort(E [] array, int fromIndex, int lastIndex, Comparator<E> comparator) {
+      if (lastIndex - fromIndex < 1) {
          return; // Array smaller than 2 is already sorted
       }
-      int middleIndex = (toIndex + fromIndex) / 2;
-      E [] leftArray = (E []) new Comparable[middleIndex - fromIndex];
-      E [] rightArray = (E []) new Comparable[toIndex - middleIndex  - fromIndex];
+      int middleIndex = (lastIndex + fromIndex) / 2;
+      E [] leftArray = (E []) new Comparable[middleIndex + 1 - fromIndex];
+      E [] rightArray = (E []) new Comparable[lastIndex - middleIndex];
 
-      for (int index = 0; index < middleIndex - fromIndex; index++) {
+      for (int index = 0; index <= middleIndex - fromIndex; index++) {
          leftArray[index] = array[index + fromIndex];
       }
-      for (int index = middleIndex; index < toIndex - fromIndex; index++) {
-         rightArray[index] = array[index + fromIndex];
+
+      for (int index = middleIndex + 1; index <= lastIndex; index++) {
+         rightArray[index - (middleIndex + 1)] = array[index + fromIndex];
       }
       mergeSort(leftArray, 0, leftArray.length - 1, comparator);
       mergeSort(rightArray, 0, rightArray.length - 1, comparator);

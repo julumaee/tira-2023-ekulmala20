@@ -189,17 +189,18 @@ Toteutukseni vastaa tehtävänannossa määriteltyjä aikakompleksisuusvaatimuks
 
 Tehtävä oli mielestäni tähänastisista haastavin. Lajittelualgoritmien toimintaperiaatteiden sisäistämiseen meni jonkin aikaa, mutta luentovideot ja Youtube-tutoriaalit auttoivat. Lisäksi algoritmien havainnollistaminen kynän ja paperin avulla helpottivat ymmärtämistä. Kaikista eniten minulle tuotti vaikeuksia mergesort, jota en edelleenkään saanut menemään testeistä läpi. Yleisesti haasteita testien kanssa oli eniten indeksien kanssa. Yleinen virhe testistä oli "index 100 out of range with size 100", vaikka mielestäni toteutukseni pitäisi toimia oikein. Tähän jäin myös mergesortin kanssa. Lisäksi ongelmaa oli kekomuistin ylivuodon kanssa, johon lopulta mikään kurssilla esitetyistä ratkaisuvaihtoehdoista ei auttanut. Sain siis nopean algoritmin testit ajettua vain maksimissaan 1 000 000 kokoisella aineistolla (2 000 000 jäi suoriutumatta) ja suoritin analyysit näiden tulosten perusteella.
 
-Toteutin tehtävässä heapsort, quicksort ja mergesort -algoritmit, mutta mergesort jäi jostain syystä toimimattomaksi.
+Toteutin tehtävässä heapsort, quicksort ja mergesort -algoritmit.
 
-Hitaan ja nopean lajittelualgoritmin nopeusero ei näy vielä kaikista pienimmällä aineistolla (n = 100), jossa hidas algoritmi suoriutui jopa paremmin kuin heapsort. Kun aineistoa kasvatetaan, alkavat erot näkyä heti selvästi ja kasvavat valtavan suureksi lajiteltaessa suurempia aineistoja (suurimpia aineistoja ei saanut lajiteltua insertionsortilla järkevässä ajassa). Tätä havainnollistavat alla olevat kuvaajat, joissa näkyvät sekä kunkin algoritmin lajitteluaika suhteessa aineiston kokoon, että yksittäisen elementin lajitteluaika suhteessa aineiston kokoon. Kuvaajista ja datasta nähdään, että nopeilla algoritmeilla pienen aineiston (n = 100) yksittäisen alkion lajittelu vei kaikista suurimman ajan. Kun aineiston kokoa kasvatetaan, ei lajitteluaika per alkio juurikaan muutu ja erittäin suurikin (1 000 000) ainesto saadaan lajiteltua tehokkaasti. 
+Hitaan ja nopean lajittelualgoritmin nopeusero ei näy vielä kaikista pienimmällä aineistolla (n = 100), jossa hidas algoritmi suoriutui jopa paremmin kuin heapsort (insertionsort 6 ms, heapsort 7 ms, quicksort 4 ms ja ). Kun aineistoa kasvatetaan, alkavat erot näkyä heti selvästi ja kasvavat valtavan suureksi lajiteltaessa suurempia aineistoja (suurimpia aineistoja ei saanut lajiteltua insertionsortilla järkevässä ajassa). Tätä havainnollistavat alla olevat kuvaajat, joissa näkyvät sekä kunkin algoritmin lajitteluaika suhteessa aineiston kokoon, että yksittäisen elementin lajitteluaika suhteessa aineiston kokoon. Kuvaajista ja datasta nähdään, että nopeilla algoritmeilla pienen aineiston (n = 100) yksittäisen alkion lajittelu vei kaikista suurimman ajan. Kun aineiston kokoa kasvatetaan, ei lajitteluaika per alkio juurikaan muutu ja erittäin suurikin (1 000 000) ainesto saadaan lajiteltua tehokkaasti. Nopeiden algoritmien pidempi lajitteluaika pienillä aineistokoilla verrattuna hitaaseen algoritmiin voi selittyä niiden monimutkaisemmalla rakenteella. Insertionsortissa käydään taulukko läpi yhdellä silmukalla, joka on hyvin pienillä datamäärillä  tehokasta. Kaikissa toteuttamissani nopeissa algoritmeissa hyödynnetään rakenteessa erillisiä metodeja, sekä tehdään useampia vertailuja ja muistinvarauksia eri muuttujille. Kaikki tämä "ylimääräinen" toiminta vie aikaa, ja näkyy siksi hitautena kaikkein pienimmillä aineistoilla.
 
 Kaavioiden ja testidatan perusteella nopeiden algoritmien aikakompleksisuusluokka näyttäisi olevan lineaarinen, sillä yksittäisen alkion lajitteluaika on kutakuinkin vakio. Tuloksista kuitenkin puuuttuu 2 000 000 alkion aineisto, joten lajitteluajan todellista kasvua erittäin suurilla aineistoilla ei tulosten perusteella nähdä. Teorian mukainen aikakompleksisuus quicksortille on keskimäärin O(n*log(n)) ja huonoimmassa tapauksessa O(n^2).Toteutukseni vastaa mielestäni tätä aikakompleksisuutta. Huonoimpaan tapaukseen joudutaan, jos taulukko on jo lajiteltu, jolloin pivot-arvoksi valikoituu taulukon suurin tai pienin arvo.
 
-Heapsortin aikakompleksisuusluokka on teorian mukaan O(n*log(n)), sekä keskimäärin että huonoimmassa tapauksessa. Tämä johtuu siitä, ettei heapsortin lajittelua hidasta taulukon alkuperäinen järjestys. Näin ollen lajitteluaika on aina "huonoin".
+Sekä heapsortin että mergesortin aikakompleksisuusluokka on teorian mukaan O(n*log(n)), sekä keskimäärin että huonoimmassa tapauksessa. Tämä johtuu siitä, ettei niiden lajittelunopeuteen vaikuta taulukon alkuperäinen järjestys. Näin ollen lajitteluaika on aina sama.
 
-Nopein algoritmi näyttää testidatan ja kaavioiden perusteella olevan quicksort. Quicksortilla päästiin hieman parempiin tuloksiin kuin heapsortilla, kun aineiston koko kasvoi yli 10 000. Erot algoritmien suoritusajoissa eivät kuitenkaan ole kovinkaan suuret. Kuvassa 4 on vielä esitettynä vertailu heapsortin ja quicksortin lajitteluajoista eri suuruisilla aineistoilla (1 = 100, 7 = 1 000 000).
+Kokonaisuudessaan nopein algoritmi näyttää testidatan ja kaavioiden perusteella olevan quicksort, toiseksi nopein heapsort ja kolmantena mergesort. Keskiarvot yksittäisen elementin lajitteluajoille olivat: quicksort 0.0091 ms/element, heapsort 0.014 ms/element ja mergesort 0.018 ms/element. Datan ja kuvaajien (kuvat 1, 2, 3 ja 4) perusteella mergesort suoriutui pienistä aineistokoista hitaammin kuin muut algoritmit. Kuitenkin suurimmalla aineistolla (n = 1 000 000) mergesort oli nopein 4245 ms ajalla. Quicksort suoriutui tästä toiseksi nopeiten ajalla 5279 ms ja heapsort ajalla 8071 ms. Erot algoritmien suoritusajoissa eivät kuitenkaan ole kovinkaan suuret. Kuvassa 4 on vielä esitettynä vertailu nopeiden algoritmien lajitteluajoista eri suuruisilla aineistoilla.
 
-Kuten raportissa on aiemmin todettu, insertionsortin aikakompleksisuusluokka on O(n^2). Tämän vuoksi se on testidatan perusteella selkeästi hitain algoritmi.
+Kuten raportissa on aiemmin analysoitu ja todettu, insertionsortin aikakompleksisuusluokka on O(n^2). Tämän vuoksi se on testidatan perusteella selkeästi hitain algoritmi.
+
 
 ![Kuva 1. Insertion sort kaaviot](image-12.png)
 
@@ -207,7 +208,11 @@ Kuten raportissa on aiemmin todettu, insertionsortin aikakompleksisuusluokka on 
 
 ![Kuva 3. QuickSort kaaviot](image-14.png)
 
+![Kuva 4. Mergesort kaaviot](image-16.png)
+
 ![Kuva 4. Quicksort vs Heapsort](image-15.png)
+
+![Kuva 5. Nopeiden algoritmien vertailu](image-18.png)
 
 Testituloksia taulukoituna:
 
@@ -239,6 +244,16 @@ Test#	Count	ms     	ms/element
 5		50000	132		0,003
 6		100000	335		0,003
 7		1000000	5279	0,005
+
+Mergesort:
+Test#	Count	 ms     ms/element
+  1	    100	     10	    0,100
+  2	    1000	 8	    0,008
+  3	    5000     28	    0,006
+  4	   	10000	 34	    0,003
+  5	   	50000	 147	0,003
+  6	  	100000	 343	0,003
+  7	 	1000000	 4245	0,004
 
 
 
