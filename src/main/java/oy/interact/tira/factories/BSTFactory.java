@@ -13,7 +13,7 @@ public class BSTFactory {
 	}
 
 	public static <K extends Comparable<K>, V> TIRAKeyedOrderedContainer<K,V> createBST(Comparator<K> comparator) {
-		throw new NotYetImplementedException("Task 07-TASK about BST not yet implemented");
+		return createBST(comparator);
 	}
 
 	// You may create the functionality that analyses a BST using the Visitor pattern
