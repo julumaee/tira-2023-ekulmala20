@@ -60,9 +60,15 @@ Järjestyksen kääntäminen vie lyhyen ajan, koska siinä vertailua olioiden v�
 Yleisesti jos järjestys pitää kääntää, se kannattaisi tehdä reverse-algoritmilla, jonka aikakompleksisuus on pienempi. Käyttämällä reverse-algoritmia, olioita ei tarvitse vertailla ollenkaan, vaan tehdään ainoastaan puolet aineiston määrästä kertaa paikanvaihtoja. Reversen aikakompleksisuus on O(n), kun taas insertionSortilla se on O(n^2).
 
 Add algoritmin aikakompleksisuusluokka on koodin perusteella mielestäni lineaarinen. Algoritmi käy jokaisen lisäyksen yhteydessä koko taulukon läpi tarkistaen, ettei listalla vielä ole lisättävää alkiota. Taulukon koon kasvaessa tarvittavien tarkistusten määrä siis kasvaa samassa suhteessa. Kuvaajasta nähdään kuitenkin täyttöajan kasvun seuraavan toisen asteen yhtälöä, eli se on neliöllinen. Täyttöajan kasvun aikakompleksisuus ei ole sama kuin lisäysalgoritmin. Täytettäessä taulukkoa lisäysalgoritmilla, täytyy jokaisen lisäyksen yhteydessä käydä koko taulukko läpi ja verrata alkoita yksi kerrallaan. Yhden alkion lisäämisen aikakompleksisuus on siis lineaarinen. Kun lisäyksiä tehdään N määrä, joudutaan taulukko käymään läpi N määrä kertoja. Täyttöajan aikakompleksisuudeksi saadaan siis O(n^2) eli se on neliöllinen (worst case).
+
+Täyttöaika suhteessa n:n kokoon
+
 ![Täyttöaika suhteessa n:n kokoon](image-4.png)
 
 Hakualgoritmien aikakompleksisuusluokka on lineaarinen O(n). Algoritmeissä käydään taulukko läpi yksi kerrallaan ja tehdään vertailu haettavan alkion ja taulukon alkioiden välillä, kunnes haettu alkio löytyy (tai ei löydy). Alkioiden määrän kasvaessa kasvaa yhteen hakuun tarvittavien vertailujen määrä samassa suhteessa (worst case). Alla oleva kuvaaja kuvaa hakuaikaa suhteessa aineiston kokoon ja siitä voidaan nähdä ajan nousevan lineaarisesti aineiston koon kasvaessa. Big O notaatiolla esitettynä hakualgoritmien aikakompleksisuus on O(f(n)).
+
+Hakuaika suhteessa n:n kokoon
+
 ![Hakuaika suhteessa n:n kokoon](image-5.png)
 
 
@@ -147,6 +153,7 @@ Kun haetaan taulukon loppupäästä 50 000 koodarin aineistolla, on hakuaika yle
 
 Nopea haku käyttää puolitushakua, jonka hakuaika on aineiston koosta riippumaton (näin pienillä aineistoilla). Todellisuudessa nopean haun (binäärisen haun) hakuaika on logaritminen, mutta max. 50 000 aineistolla aika on koko ajan 0 ms. Tämä nähdään myös alla olevista taulukoista. Tämän vuoksi haku kestää saman aikaa alkion sijainnista riippumatta, oli se sitten alkupäässä, loppupäässä tai keskellä listaa.
 
+
 ![Hakuaika (ascending)](image-8.png)
 ![Hakuaika (descending)](image-11.png)
 
@@ -201,22 +208,35 @@ Kokonaisuudessaan nopein algoritmi näyttää testidatan ja kaavioiden perusteel
 
 Kuten raportissa on aiemmin analysoitu ja todettu, insertionsortin aikakompleksisuusluokka on O(n^2). Tämän vuoksi se on testidatan perusteella selkeästi hitain algoritmi.
 
+Kuva 1. Insertion sort kaaviot
 
 ![Kuva 1. Insertion sort kaaviot](image-12.png)
 
+Kuva 2. HeapSort kaaviot
+
 ![Kuva 2. HeapSort kaaviot](image-13.png)
+
+Kuva 3. QuickSort kaaviot
 
 ![Kuva 3. QuickSort kaaviot](image-14.png)
 
+Kuva 4. Mergesort kaaviot
+
 ![Kuva 4. Mergesort kaaviot](image-16.png)
 
-![Kuva 4. Quicksort vs Heapsort](image-15.png)
+Kuva 5. Quicksort vs Heapsort
 
-![Kuva 5. Nopeiden algoritmien vertailu](image-18.png)
+![Kuva 5. Quicksort vs Heapsort](image-15.png)
+
+Kuva 6. Nopeiden algoritmien vertailu
+
+![Kuva 6. Nopeiden algoritmien vertailu](image-18.png)
+
 
 Testituloksia taulukoituna:
 
-Hidas (insertionsort):	
+Hidas (insertionsort):
+```
 Test#   Count   ms      ms/element
 1		100		6		0,06
 2		1000	21		0,021
@@ -224,8 +244,10 @@ Test#   Count   ms      ms/element
 4		10000	1416	0,142
 5		50000	110361	2,207
 6		100000	506958	5,07
+```
 
 Heapsort:	
+```
 Test#	Count	ms		ms/element
 1		100		7		0,07
 2		1000	5		0,005
@@ -234,8 +256,10 @@ Test#	Count	ms		ms/element
 5		50000	268		0,005
 6		100000	449		0,004
 7		1000000	8071	0,008
+```
 
 Quicksort:
+```
 Test#	Count	ms     	ms/element
 1		100		4		0,04
 2		1000	7		0,007
@@ -244,8 +268,10 @@ Test#	Count	ms     	ms/element
 5		50000	132		0,003
 6		100000	335		0,003
 7		1000000	5279	0,005
+```
 
 Mergesort:
+```
 Test#	Count	 ms     ms/element
   1	    100	     10	    0,100
   2	    1000	 8	    0,008
@@ -254,10 +280,95 @@ Test#	Count	 ms     ms/element
   5	   	50000	 147	0,003
   6	  	100000	 343	0,003
   7	 	1000000	 4245	0,004
+  ```
 
 
 
 ## 07-TASK
+
+Tehtävä 7 oli mielestäni selkesästi tähänastisista kurssin tehtävistä haastavin. Toteutin indexOf() ja getIndex() -metodit D-toteutuksella, ja niiden saaminen toimimaan oikein oli mielestäni kaikista haasteellista. Tein algoritmit ennen niistä kertovan liveluennon ja ohjeiden julkaisemista, joten jouduin painimaan ongelmieni kanssa itsekseni. Sain kuitenkin lopulta kaiken toimimaan niin kuin pitääkin. Binäärisen hakupuun rakenne ja toiminta tuli tehtävää tehdessä hyvin tutuksi.
+
+Metodien aikakompleksisuus:
+
+Binäärinen hakupuu käyttää toteutuksessani metodeissa privaatteja apumetodeja. Metodit getIndex() ja indexOf() käyttävät vastaavaa logiikkaa hyödyntäviä apumetodeja, joissa haluttu indeksi etsitään käymällä puuta läpi ylhäältä alas, valiten aina oikea haara sen indeksin arvon (indexOf()) tai avaimen arvon (getIndex()) mukaan. Metodit hyödyntävät indeksien laskennassa solmuissa olevaa tietoa niiden lasten lukumäärästä, jolloin kaikkia solmuja ei tarvitse käydä läpi indeksien laskemista varten. Tämän toteutuksen aikakompleksisuus on parhaassa ja keskiarvoisessa tapauksessa O(log(n)) tasapainotetulle hakupuulle. Huonoimpaan tapaukseen päästään, kun hakupuu on linkitetty lista. Tällöin joudutaan huonoimmassa tapauksessa käymään läpi listan jokainen alkio ja näin ollen aikakompleksisuus on O(n).
+
+Puuhun lisääminen tehdään iteratiivisesti apumetodin addNode() avulla. addNode() lisää arvon avaimen arvon mukaiseen paikkaan puussa tehden vertailun jokaisessa haarassa ja valiten oikean haaran avaimen mukaan. Vertailujen määrä määrittyy puun syvyyden mukaan, ja tasapainotetun puun aikakompleksisuus tälle metodille on logaritminen (O(log(n))). Huonoimmassa tapauksessa (linkitetty lista) joudutaan jälleen käymään puun jokainen alkio läpi ja aikakompleksisuus on lineaarinen (O(n)).
+
+Puusta etsiminen predikaatin avulla  tehdään rekursiivisesti apumetodeilla searchIndex() (metodissa findIndex()) ja findNodeValue() (metodissa find()). Apumetodit searchIndex ja findNodeValue lisäävät listan alkiot yksitellen indeksien mukaiseen järjestykseen pinotietorakenteeseen ja vertaavat niiden arvoja indeksin mukaisessa järjestyksessä predikaattiin. Näin ollen niiden molempien aikakompleksisuus on alkioiden määrästä riippuvainen eli lineaarinen O(n). 
+
+Metodi size() käyttää apumetodia sizePartTree(), joka laskee solmun lasten lukumäärään perustuen puun koon annetusta solmusta alaspäin. Metodi perustuu yksinkertaiseen arvon hakemiseen, ja sen aikakompleksisuus ei riipu alkioiden määrästä ja on siten vakiollinen O(1).
+
+Metodi toArray() käyttää apumetodia BSTToArray(), joka käy hakupuun läpi rekursiivisesti ja lisää alkiot indeksien mukaiseen järjestykseen taulukkoon. Riippumatta puun muodosta joudutaan sen jokainen alkio käydä aina läpi, jolloin aikakompleksisuus on lineaarinen O(n).
+
+Kaikki toteuttamani algoritmit ovat oikeellisia, sillä ne  suorittavat niille annetut tehtävät halutulla tavalla, suoriutuvat kaikilla syötteillä loppuun saakka ja niiden suoritus päättyy, kun haluttuun lopputulokseen on päästy.
+
+Puun maksimisyvyys eri aineistokoilla oli toteutuksellani seuraava:
+
+```
+100 koodaria: 12
+1 000 koodaria: 21
+5 000 koodaria: 28
+10 000 koodaria: 29
+50 000 koodaria: 39
+100 000 koodaria: 37
+1 000 000 koodaria: 50
+
+Tasapainotetun puun syvyys eri aineistokoilla taas olisi:
+
+100 koodaria: 7
+1 000 koodaria: 10
+5 000 koodaria: 13
+10 000 koodaria: 14
+50 000 koodaria: 16
+100 000 koodaria: 17
+1 000 000 koodaria: 20
+```
+
+Nähdään, että toteutukseni luomat puut ovat huomattavan paljon syvempiä, kuin tasapainotettu puu olisi (optimaalinen tilanne). Tämän johdosta algoritmien aikakompleksisuudet eivät saavuta testidatan mukaan niiden teorian mukaista keskimääräistä aikakompleksisuutta.
+
+Kuvissa 1-4 nähdään testien tuloksia binäärisen hakupuun ja simplecontainerin suorituskyvystä eri datamäärillä. Kuvassa 1 on lisäysaika, joka vaikuttaisi olevan simplecontainerin osalta teorian mukainen, eli neliöllinen. BST:llä lisäämisen aikakompleksisuus on kuvaajan mukaan lähestulkoon lineaarinen, vaikka teorian mukaan sen pitäisi olla parhaassa tapauksessa logaritminen. Tämä aiheutuu todennäiköisesti siitä, ettei algoritmin luoma puu ole ideaali eli tasapainotettu.
+
+Kuvassa 2 on tiedon vieminen taulukkoon. Jälleen BST:llä käyrä näyttäisi olevan lähellä lineaarista, kun taas simplecontainerilla se on neliöllinen. Nyt aikakompleksisuus on teorian mukainen, sillä puun muoto ei vaikuta toArray():n suoritusaikaan, vaan siinä käydään joka tapauksessa jokainen puun alkio läpi.
+
+Kuvassa 3 nähdään hakuaika, joka on molemmilla tietorakenteilla lineaarinen. Myös hakuaika on teorian mukainen, sillä tässäkin tapauksessa puu käydään läpi alkio kerrallaan sen muodosta riippumatta.
+
+Kuva 4 havainnollistaa getIndex() aikaa, eli aikaa joka kuluu jokaisen alkion hakemiseen indeksin avulla. Binäärisellä hakupuulla getIndex:n käyrä näyttäisi muotoutuvan kohti logaritmista käyrää. Puun muodon poikkeaminen tasapainotetusta aiheuttaa sen, että erityisesti aineiston koon kasvaessa aikakompleksisuus poikkeaa logaritmisesta käyrästä. Simplecontainer suoriutuu tästä testistä paremmin, eikä getIndex:n käyttämä aika näytä testidatan perusteella muuttuvan aineiston koon mukaan.
+
+Kuvaajista nähdään, että BST suoriutuu aineiston lisäämisestä huomattavan paljon tehokkaammin kuin simplecontainer. Simplecontainerin kohdalla viimeinen kohtuullisessa ajassa saatu aineistokoko oli 100 000 alkiota, kun taas BST:llä 1 000 000 alkion aineisto saatiin lisättyä 2597 millisekunnissa. 2 000 000 alkion aineistolla koneestani loppui muisti kesken, joten sitä en voinut suorittaa.
+
+Vastaava tulos saadaan toArray() metodille; simplecontainerilla suoritusaika 100 000 aineistolle on 119 188 ms kun taas bst:llä se on 11 ms. 1 000 000 alkion aineiston BST lisäsi taulukkoon 98 millisekunnissa.
+
+Hakuaika näyttäisi olevan molemmissa tietorakenteissa melko lähellä toisiaan 100 000 alkion aineistoon saakka (suurempaa ei saatu testattua simplecontainerilla), mutta simplecontainer voittaa testiaineiston mukaan muutamilla millisekunneilla.
+
+getIndex():n hakuaika on pienillä aineistoilla molemmilla tietorakenteilla lähes mitätön. 50 000 alkion aineistolla simplecontainer suoritti haun testin mukaan ajassa 4 ms, kun taas BST:llä siihen kului 12 ms ja 100 000 alkion aineistolla simplecontainer 0ms, BST 16 ms. Näiden tulosten mukaan taulukkopohjainen ratkaisu on paljon tehokkaampi indeksillä haettaessa. Binäärisessä hakupuussa indeksejä ei ole valmiina, vaan ne täytyy laskea puun solmuille erillisen metodin avulla. Omassa tietorakenteessani toteutin haun indeksin mukaan metodilla, jonka teoreettinen aikakompleksisuus on logaritminen. Taulukkopohkaisessa tietorakenteessa taulukko on indeksöity valmiiksi, jolloin tietyllä indeksillä voidaan osoittaa suoraan taulukon arvoon. Tämän vuoksi simplecontainer-toteutuksessa indeksin mukaan hakeminen suoritetaan vakioajassa ja tehokkaammin, kuin binäärisen hakupuun tapauksessa.
+
+Aikatehokkuudesta (aika/alkio eri algoritmeissa) en saanut Excelin avulla tuotettua järkevää kaaviota, mutta testidata on esitetty kuvassa 6. Datan perusteella nähdään lisäysajan kasvun yksittäiselle elementille olevan BST:n tapauksessa lineaarista ja simplecontainerilla neliöllistä. Lisäyksen aikatehokkuus on siis BST:llä hyvä suurillakin aineistoilla, mutta simplecontainerilla suurilla aineistoilla todella huono. Hakuaika getIndex:llä näyttää datan perusteella olevan yksittäiselle alkiolle melko lailla vakio molemmilla tietorakenteilla, eli tässä tapauksessa saavutettiin hyvä aikatehokkuus.
+
+Eri toimintojen suoritusaikoja käyttöliittymän lokista on esitetty kuvassa 5. Käyttöliittymällä kaikki sujuu nopeasti ja tehokkaasti alle 1 000 000 suuruisilla aineistoilla. 1 000 000 alkion aineiston tuominen ja lajittelu TiraCodersiin vei binäärisellä hakupuulla melko pitkän ajan, 11 929 ms. Tämä on kuitenkin mielestäni kohtuullinen aika näin suurelle aineistolle. Kun aineisto saatiin tuotua käyttöliittymään, sen selaaminen ja siitä hakeminen onnistui sujuvasti ja ongelmitta. Pisin hakuaika 1 000 000 alkion aineistolla oli 94 ms, mutta useimmat haut onnistuivat paljon nopeammin. Aineiston uudelleenjärjestäminen näin isolla aineistolla vei paljon aikaa. 
+
+Kuva 1. Lisäysajat
+
+![Kuva 1. Lisäysajat](image-20.png)
+
+Kuva 2. toArray()
+
+![Kuva 2. toArray()](image-21.png)
+
+Kuva 3. Hakuajat
+
+![Kuva 3. Hakuajat](image-22.png)
+
+Kuva 4. getIndex()
+
+![Kuva 4. getIndex()](image-23.png)
+
+Kuva 5. Käyttöliittymän loki
+
+![Kuva 5. Käyttöliittymän loki](image-19.png)
+
+Kuva 6. Testidata taulukossa
+
+![Kuva 6. Testidata taulukossa](image-24.png)
 
 ## 08-TASK
 
