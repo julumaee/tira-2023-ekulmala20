@@ -199,8 +199,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
                 if (tempNode == root) {
                     root = node;
                     return;
-                }
-                else {
+                } else {
                     if (comparator.compare(key, parent.pair.getKey()) <= 0) {
                         node.parentNode = parent;
                         parent.leftChild = node;
@@ -216,19 +215,17 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
             parent = tempNode;
             if (comparator.compare(key, tempNode.pair.getKey()) <= 0) {
                 tempNode = tempNode.leftChild;
-            }
-            else if (comparator.compare(key, tempNode.pair.getKey()) > 0) {
+            } else if (comparator.compare(key, tempNode.pair.getKey()) > 0) {
                 tempNode = tempNode.rightChild;
             }
         }
         if (currentDepth > maxDepth) {
                 maxDepth = currentDepth;
-            }
+        }
         if (root == null) {
             root = node;
             maxDepth = 1;
-        }
-        else if (comparator.compare(key, parent.pair.getKey()) <= 0) {
+        } else if (comparator.compare(key, parent.pair.getKey()) <= 0) {
             node.parentNode = parent;
             parent.leftChild = node;
         } else if (comparator.compare(key, parent.pair.getKey()) > 0) {
