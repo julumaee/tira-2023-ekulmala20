@@ -19,10 +19,10 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
         itemArray = (Pair<K, V> []) new Pair[DEFAULT_HASHTABLE_SIZE];
     }
 
-    @SuppressWarnings("unchecked")
-    public HashTableContainer(int capacity) {
-        itemArray = (Pair<K, V> []) new Pair[capacity];
-    }
+    // @SuppressWarnings("unchecked")
+    // public HashTableContainer(int capacity) {
+    //     itemArray = (Pair<K, V> []) new Pair[capacity];
+    // }
 
     private int indexFor(int hash, int hashModifier) {
         return (hash + hashModifier) & 0x7FFFFFFF % itemArray.length;
