@@ -19,13 +19,8 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
         itemArray = (Pair<K, V> []) new Pair[DEFAULT_HASHTABLE_SIZE];
     }
 
-    // @SuppressWarnings("unchecked")
-    // public HashTableContainer(int capacity) {
-    //     itemArray = (Pair<K, V> []) new Pair[capacity];
-    // }
-
     private int indexFor(int hash, int hashModifier) {
-        return (hash + hashModifier) & 0x7FFFFFFF % itemArray.length;
+        return ((hash + hashModifier) & 0x7FFFFFFF) % itemArray.length;
     }
 
     @SuppressWarnings("unchecked")
@@ -38,7 +33,7 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
         maxProbingCount = 0;
         count = 0;
         for (int index = 0; index < oldCapacity; index++) {
-            if (itemArray[index] != null) {
+            if (oldArray[index] != null) {
                 add(oldArray[index].getKey(), oldArray[index].getValue());
             }
         }
@@ -48,40 +43,33 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
 	public void add(K key, V value) throws OutOfMemoryError, IllegalArgumentException {
         if (key == null || value == null) {
             throw new IllegalArgumentException("Trying to add null key or value");
-        } else if (size() >= 0.65 * capacity()) {
-            reallocate((int) 1.3 * capacity());
+        } if (size() >= 0.65 * capacity()) {
+            reallocate((int) (1.35 * capacity()));
         }
-        
-        else {
             boolean added = false;
             int index = 0;
             int hashModifier = 0;
             int probingCount = 0;
             int hash = key.hashCode();
-            try {
-                do {
-                    index = indexFor(hash, hashModifier);
-                    if (itemArray[index].equals(null)) {
-                        itemArray[index] = new Pair<>(key, value);
-                        added = true;
-                        count++;
-                    } else if (itemArray[index].getKey().equals(key)) {
-                        itemArray[index] = new Pair<>(key, value);
-                        pairsUpdated++;
-                        added = true;
-                    } else {
-                        hashModifier++;
-                        collisionCount++;
-                        probingCount++;
-                    }
-                } while (!added);
-                if (probingCount > maxProbingCount) {
-                    maxProbingCount = probingCount;
+            do {
+                index = indexFor(hash, hashModifier);
+                if (itemArray[index] == null) {
+                    itemArray[index] = new Pair<>(key, value);
+                    added = true;
+                    count++;
+                } else if (itemArray[index].getKey().equals(key)) {
+                    itemArray[index] = new Pair<>(key, value);
+                    pairsUpdated++;
+                    added = true;
+                } else {
+                    hashModifier++;
+                    collisionCount++;
+                    probingCount++;
                 }
-            } catch (Exception OutOfMemoryError) {
-                throw new OutOfMemoryError("Ran out of memory while adding to BST");
+            } while (!added);
+            if (probingCount > maxProbingCount) {
+                maxProbingCount = probingCount;
             }
-        }
     }
 
     @Override
@@ -94,7 +82,7 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
             int hashModifier = 0;
             do {
                 index = indexFor(hash, hashModifier);
-                if (itemArray[index].equals(null)) {
+                if (itemArray[index] == null) {
                     return null; // Item not found with given key
                 } else if (itemArray[index].getKey().equals(key)) {
                     return itemArray[index].getValue(); // Item found
@@ -108,8 +96,10 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
     @Override
 	public V find(Predicate<V> searcher) {
         for (int index = 0; index < capacity(); index++) {
-            if (itemArray[index].getValue().equals(searcher)) {
-                return itemArray[index].getValue();
+            if (itemArray[index] != null) {
+                if (searcher.test(itemArray[index].getValue())) {
+                    return itemArray[index].getValue();
+                }
             }
         }
         return null;
@@ -131,16 +121,12 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
         if (capacity <= 0 || capacity <= size()) {
             throw new IllegalArgumentException("Ensuring capacity with illegal arguments");
         } else {
-            try {
-                if (count == 0) {
-                    Pair<K, V> [] newArray = null;
-                    newArray = (Pair<K, V> []) new Pair[capacity];
-                    itemArray = newArray;
-                } else {
-                    reallocate(capacity);
-                }
-            } catch (Exception OutOfMemoryError) {
-                throw new OutOfMemoryError("Ran out of memory while ensuring capacity");
+            if (count == 0) {
+                Pair<K, V> [] newArray = null;
+                newArray = (Pair<K, V> []) new Pair[capacity];
+                itemArray = newArray;
+            } else {
+                reallocate(capacity);
             }
         }
     }
@@ -160,20 +146,16 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
     @SuppressWarnings("unchecked")
 	@Override
     public Pair<K,V> [] toArray() throws Exception {
-        try {
-            Pair<K, V> [] toArray = null;
-            toArray = (Pair<K, V> []) new Pair[size()];
-            int toIndex = 0;
-            for (int index = 0; index < capacity(); index++) {
-                if (itemArray[index] != null) {
-                    toArray[toIndex] = itemArray[index];
-                    toIndex++;
-                }
+        Pair<K, V> [] toArray = null;
+        toArray = (Pair<K, V> []) new Pair[size()];
+        int toIndex = 0;
+        for (int index = 0; index < capacity(); index++) {
+            if (itemArray[index] != null) {
+                toArray[toIndex] = itemArray[index];
+                toIndex++;
             }
-            return toArray;
-        } catch (Exception OutOfMemoryError) {
-            throw new OutOfMemoryError("Ran out of memory while toArray()!");
         }
+            return toArray;
     }
 
     

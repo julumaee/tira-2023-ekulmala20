@@ -312,11 +312,7 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
         if (key == null || value == null) {
             throw new IllegalArgumentException("Either key or value was null, add to BST not excecuted");
         } else {
-            try {
-                addNode(key, value, comparator);
-            } catch (Exception OutOfMemoryError) {
-                throw new OutOfMemoryError("Ran out of memory while adding to BST");
-            }
+            addNode(key, value, comparator);
         }
     }
 
@@ -356,14 +352,10 @@ public class BinarySearchTreeContainer<K extends Comparable<K>, V> implements TI
     @SuppressWarnings("unchecked")
 	@Override
 	public Pair<K,V> [] toArray() throws Exception {
-        try {
-            AtomicInteger atomicIndex = new AtomicInteger(-1);
-            Pair<K,V> [] array = (Pair<K, V> []) new Pair[size()];
-            BSTToArray(root, array, atomicIndex);
-            return array;
-        } catch (Exception OutOfMemoryError) {
-            throw new OutOfMemoryError("Ran out of memory while trying to create array");
-        } 
+        AtomicInteger atomicIndex = new AtomicInteger(-1);
+        Pair<K,V> [] array = (Pair<K, V> []) new Pair[size()];
+        BSTToArray(root, array, atomicIndex);
+        return array;
     }
 
 	@Override

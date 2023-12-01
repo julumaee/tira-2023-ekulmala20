@@ -56,11 +56,7 @@ public class StackImplementation<E> implements StackInterface<E> {
             throw new NullPointerException("Element with value null cannot be pushed");
         }
         if (currentIndex >= capacity() -1) {
-            try {
-                reAllocate(capacity() * 2);
-            } catch (Exception OutOfMemoryError) {
-                throw new OutOfMemoryError();
-            }
+            reAllocate(capacity() * 2);
         }
         currentIndex++;        
         itemArray[currentIndex] = element;

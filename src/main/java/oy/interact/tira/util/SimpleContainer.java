@@ -209,7 +209,7 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	// TEACHERS: TODO: Remove the call to Algorithms sort method.
 	@Override
 	public void sort() {
-		Algorithms.insertionSort(array, 0, count);
+		Algorithms.fastSort(array);
 		sorted = true;
 
 	}
@@ -217,7 +217,7 @@ public class SimpleContainer<E extends Comparable<E>> implements TIRAContainer<E
 	// TEACHERS: TODO: Remove the call to Algorithms sort method.
 	@Override
 	public void sort(Comparator<E> usingComparator) {
-		Algorithms.insertionSort(array, 0, count, usingComparator);
+		Algorithms.fastSort(array, 0, count, usingComparator);
 		sorted = true;
 	}
 

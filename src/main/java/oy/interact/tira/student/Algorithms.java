@@ -184,8 +184,7 @@ public class Algorithms {
    }
 
    public static <E extends Comparable<E>> void fastSort(E [] array) {
-      // quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
-      mergeSort(array, 0, array.length - 1, Comparator.naturalOrder());
+      quickSort(array, 0, array.length - 1, Comparator.naturalOrder());
       // heapSort(array, 0, array.length, Comparator.naturalOrder());
    }
 
@@ -264,8 +263,8 @@ public class Algorithms {
          return; // Array smaller than 2 is already sorted
       }
       int middleIndex = (lastIndex + fromIndex) / 2;
-      E [] leftArray = (E []) new Comparable[middleIndex + 1 - fromIndex];
-      E [] rightArray = (E []) new Comparable[lastIndex - middleIndex];
+      E [] leftArray = (E []) new Object[middleIndex + 1 - fromIndex];
+      E [] rightArray = (E []) new Object[lastIndex - middleIndex];
 
       for (int index = 0; index <= middleIndex - fromIndex; index++) {
          leftArray[index] = array[index + fromIndex];

@@ -294,7 +294,7 @@ Binäärinen hakupuu käyttää toteutuksessani metodeissa privaatteja apumetode
 
 Puuhun lisääminen tehdään iteratiivisesti apumetodin addNode() avulla. addNode() lisää arvon avaimen arvon mukaiseen paikkaan puussa tehden vertailun jokaisessa haarassa ja valiten oikean haaran avaimen mukaan. Vertailujen määrä määrittyy puun syvyyden mukaan, ja tasapainotetun puun aikakompleksisuus tälle metodille on logaritminen (O(log(n))). Huonoimmassa tapauksessa (linkitetty lista) joudutaan jälleen käymään puun jokainen alkio läpi ja aikakompleksisuus on lineaarinen (O(n)).
 
-Puusta etsiminen predikaatin avulla  tehdään rekursiivisesti apumetodeilla searchIndex() (metodissa findIndex()) ja findNodeValue() (metodissa find()). Apumetodit searchIndex ja findNodeValue lisäävät listan alkiot yksitellen indeksien mukaiseen järjestykseen pinotietorakenteeseen ja vertaavat niiden arvoja indeksin mukaisessa järjestyksessä predikaattiin. Näin ollen niiden molempien aikakompleksisuus on alkioiden määrästä riippuvainen eli lineaarinen O(n). 
+Puusta etsiminen predikaatin avulla  tehdään rekursiivisesti apumetodeilla searchIndex() (metodissa findIndex()) ja findNodeValue() (metodissa find()). Apumetodit searchIndex ja findNodeValue lisäävät listan alkiot yksitellen indeksien mukaiseen järjestykseen pinotietorakenteeseen ja vertaavat niiden arvoja indeksin mukaisessa järjestyksessä predikaattiin. Näin ollen niiden molempien aikakompleksisuus on alkioiden määrästä riippuvainen eli lineaarinen O(n).
 
 Metodi size() käyttää apumetodia sizePartTree(), joka laskee solmun lasten lukumäärään perustuen puun koon annetusta solmusta alaspäin. Metodi perustuu yksinkertaiseen arvon hakemiseen, ja sen aikakompleksisuus ei riipu alkioiden määrästä ja on siten vakiollinen O(1).
 
@@ -371,5 +371,69 @@ Kuva 6. Testidata taulukossa
 ![Kuva 6. Testidata taulukossa](image-24.png)
 
 ## 08-TASK
+
+Tehtävä 08 oli mielestäni helpompi kuin 07, mutta debuggaus vaati melko paljon työtä. Mikään toteutuksen vaiheista ei ollut erityisen haastava, mutta haastavinta oli toteutuksen debuggaus ja pienten virheiden löytäminen, sillä testit eivät selkeästi osoittaneet kaikkien virheiden lähdettä. Lopulta sain kuitenkin toteutuksen toimivaksi. Opin tehtävässä hajautustaulun toimintaperiaatteen ja toteutuksen javalla.
+
+Mielestäni toteutukseni hajautustaululle on oikeellinen, sillä se suoriutuu loppuun ja päätyy oikeaan lopputulemaan kaikilla annetuilla syötteillä. 
+
+Hajautustaulun aikakompleksisuusanalyysi:
+
+Hajautustauluun lisääminen on hyvällä hajautusalgoritmillä parhaassa tapauksessa vakiollinen O(1) ja keskimääräisessä tapauksessa käytännössä vakiollinen. Hyvällä hajautusfunktiolla törmäyksiä tapahtuu vain vähän, ja näin ollen lisäysaikaan ei juurikaan vaikuta lisättävän aineiston koko. Pahimmassa tapauksessa (huono hajautusfunktio) lisäysaika on lineaarinen, jolloin törmäysten määrä kasvaa lineaarisesti ja näin ollen myös lisäysaika kasvaa törmäysten kasvun mukaan.
+
+get()-operaation aikakompleksisuus on sama kuin lisäyksen (O(1) hyvällä hajautusfunktiolla), sillä hakiessa indeksi lasketaan samaan tapaan kuin lisättäessäkin.
+
+find()-operaation aikakompleksisuus on lineaarinen O(n). Hakiessa predikaatilla taulukkoa käydään järjestyksessä läpi, kunnes haluttu arvo löydetään, ja näin ollen hakuaika seuraa aineiston määrää.
+
+Tilan allokoiminen (reallocate()) on aikakompleksisuudeltaan lineaarinen O(n). Allokoiminen vaatii taulukossa olevien elementtien uudelleenhajautusta, jolloin suoritusaika riippuu taulukon koosta. 
+
+Mikäli hajautustaulu sisältää jo alkioita, ensureCapacity() käyttää reallocate()-metodia ja näin ollen sen aikakompleksisuus on vastaavasti lineaarinen. Jos taas taulu ei sisällä alkioita, on ensureCapacity:n aikakompleksisuus vakiollinen.
+
+Operaatiot size(), capacity() ja clear() ovat kaikki aikakompleksisuudeltaan vakiollisia, sillä ne ovat toiminnaltaan hyvin yksinkertaisia eivätkä sisällä looppeja.
+
+toArray() on lineaarinen, sillä siinä käydään taulukko läpi ja siirretään kaikki sen elementit yksi kerrallaan uuteen taulukkoon. Taulukon koko siis ratkaisee, kauanko suoritus kestää.
+
+Mittaustulosten ja niistä muodostettujen käyrien (käyrät esitetty alla) mukaan hajautustaulun aikakompleksisuus on lähestulkoon lineaarinen. Tämä aiheutuu epätäydellisen hajautusfunktion aiheuttamasta törmäysten määrän kasvusta. Törmäysten käsittely tehdään probing-menetelmällä, jossa törmäyksen sattuessa lasketaan uusi hash lisättävälle alkiolle hashModifier-muuttujan avulla. Näin tehdään, kunnes taulukosta löydetään vapaa paikka.
+
+Mittaustulosten mukaan hajautustauluun lisääminen oli nopeampaa kuin binääriseen hakupuuhun (50 000 alkion aineistolla hajautustaululla 64 ms, BST:llä 111 ms). Teorian mukainen lisäämisen aikakompleksisuus on BST:llä logaritminen ja hajautustaululla vakiollinen (tässä lähes lineaarinen törmäysten johdosta). Tämän vuoksi hajautustauluun lisääminen tapahtuu nopeammin kuin BST:hen.
+
+Hakeminen hajautustaulusta on sekä teorian, että tulosten mukaan aikakompleksisuudeltaan lineaarista, kun taas hakeminen BST:stä logaritmista. 1000 alkion aineistolla hajautustaulun hakuaika on 2ms, BST:llä 1ms ja 50 000 alkion aineistolla hajautustaululla 21ms, BST:llä 59 ms. Koska hajautustaulua ei testata suuremmalla aineistolla kuin 50 000, hakuaikoja ei voida vertailla suurilla aineistoilla. Tulosten mukaan pienemmillä aineistoilla kuin 100 000, on hajautustaulu tehokkaampi. Hajautustaulun hakuaika riippuu hajautusfunktiosta, sillä hyvällä hajautusfunktiolla törmäyksiä tapahtuu vähän, ja hakuajassa päästään lähelle vakiollista.
+
+toArray (sorted) on binäärisellä hakupuulla selvästi tehokkaampi kuin hajautustaululla. Hajautustaululla alkiot eivät ole tietosäiliössä valmiissa järjestyksessä, joten taulukko joudutaan lajittelemaan erillisellä lajittelualgoritmilla, kun taas BST:ssä alkiot ovat valmiiksi järjestyksessä ja toArray lisää ne taulukkoon tässä järjestyksessä.
+
+SimpleContainerilla suurin testattu aineisto oli 50 000 alkiota. Hajautustaulu voittaa simpleContainerin lisäysajassa helposti aineiston koon kasvaessa 5000 alkioon ja siitä yli. Tätä pienemmillä aineistoilla lisäysajat ovat suhteellisen lähellä toisiaan. Hakuajat ovat hajautustaulutoteutuksellani hiukan paremmat kuin simpleContainerilla. Myös toArray:n tulokset ovat samankaltaiset, joidenkin millisekuntien heitoilla. 
+
+Lisäysaika simpleKeyedContainerilla on selvästi nopeampi kuin hajautustaulutoteutuksellani aineistokoosta riippumatta. Hakuaika taas kasvaa simpleKeyedContainerilla neliöllisesti, kun taas hajautustaulutoteutuksellani kutakuinkin lineaarisesti. Näin ollen hajautustaulu voittaa simpleKeyedContainerin hakuajassa selvästi, etenkin suurilla aineistoilla. toArray:ssä ajat ovat lähellä toisiaan.
+
+Eri tietosäilioiden suorituskykymittausten tuloksia: 
+
+Hashtable:
+![Hashtable performance](image-31.png)
+
+BST:
+![BST](image-32.png)
+
+SimpleContainer:
+![SimpleContainer](image-33.png)
+
+SimpleKeyedContainer:
+![SimpleKeyedContainer](image-34.png)
+
+Sanojen laskeminen käyttöliittymän kautta tapahtuu sujuvasti ja nopeasti. Suurin aineisto, jolla tämän tein, oli tämän projektin kansio. Viivettä ei juurikaan tullut, ja lista tulostui nopeasti.
+
+Testattuja hashfunktioita ja niiden suorityskykyjä:
+
+Ensimmäinen funtio:
+![Ensimmäinen](image-25.png)
+![Ensimmäisen tulokset](image-26.png)
+
+Toinen funktio:
+![Toinen](image-27.png)
+![Toisen tulokset](image-28.png)
+
+Lopullinen funktio:
+![Lopullinen](image-29.png)
+![Lopullisen tulokset](image-30.png)
+
+
 
 ## 09-TASK

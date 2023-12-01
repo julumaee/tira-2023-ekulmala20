@@ -73,11 +73,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         throws OutOfMemoryError if no additional room can be allocated for the queue
         */
         if (size() == capacity()) {
-            try {
-                reAllocate(capacity()*2);                
-            } catch (Exception QueueAllocationException) {
-                throw new OutOfMemoryError();
-            }
+            reAllocate(capacity()*2);                
         }
         if (element == null) {
             throw new NullPointerException("Element with value null cannot be enqued");
