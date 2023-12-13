@@ -286,7 +286,7 @@ Test#	Count	 ms     ms/element
 
 ## 07-TASK
 
-Tehtävä 7 oli mielestäni selkesästi tähänastisista kurssin tehtävistä haastavin. Toteutin indexOf() ja getIndex() -metodit D-toteutuksella, ja niiden saaminen toimimaan oikein oli mielestäni kaikista haasteellista. Tein algoritmit ennen niistä kertovan liveluennon ja ohjeiden julkaisemista, joten jouduin painimaan ongelmieni kanssa itsekseni. Sain kuitenkin lopulta kaiken toimimaan niin kuin pitääkin. Binäärisen hakupuun rakenne ja toiminta tuli tehtävää tehdessä hyvin tutuksi.
+Tehtävä 7 oli mielestäni selkeästi tähänastisista kurssin tehtävistä haastavin. Toteutin indexOf() ja getIndex() -metodit D-toteutuksella, ja niiden saaminen toimimaan oikein oli mielestäni kaikista haasteellista. Tein algoritmit ennen niistä kertovan liveluennon ja ohjeiden julkaisemista, joten jouduin painimaan ongelmieni kanssa itsekseni. Sain kuitenkin lopulta kaiken toimimaan niin kuin pitääkin. Binäärisen hakupuun rakenne ja toiminta tuli tehtävää tehdessä hyvin tutuksi.
 
 Metodien aikakompleksisuus:
 
@@ -435,5 +435,44 @@ Lopullinen funktio:
 ![Lopullisen tulokset](image-30.png)
 
 
-
 ## 09-TASK
+
+Task 09 oli mielestäeni suhteellisen yksinkertainen tehtävä verrattuna aiempiin tehtäviin, pohjana niistä saatu tietotaito. Hakualgoritmien toimintaperiaate oli tuttu minulle aiemmalta kurssilta, joten niiden toteutus oli melko suoraviivaista ja yksinkertaista. Työläintä oli tutustua javan rajapintoihin ja luokkiin ja opetella käyttämään niitä - erityisesti tietotyyppien pyörittelyn kanssa kului aikaa. Toteutin tehtävässä molemmat hakualgoritmit (BFS ja DFS), syklien etsimisen (sekä suunanttu, että suuntaamaton graafi) ja disconnected testauksen.
+
+Mielestäni toteutukseni on oikeellinen, sillä se suorittaa annetut tehtävät loppuun ja tuottaa oikeanlaisen lopputuloksen kaikilla sallituilla syötteillä.
+
+Eri algoritmien aikakompleksisuusanalyysi:
+
+Graafiin lisääminen tapahtuu usean eri metodin avulla. Ensin luodaan vertex, joka sisältää annetun elementin metodilla createVertexFor(). Metodi luo vertexin lisäksi tyhjän listan, joka lisätään graafiin siten, että vertex on avaimena ja tyhjä lista arvona. Graafiin lisäämisen aikakompleksisuus yhdelle alkiolle on O(1), joten vertexin luominen usealle alkiolle on O(V). Vertexin luomisen jälkeen halutaan sille lisätä reunoja. Reunojen lisääminen tapahtuu metodilla addEdge(), joka kutsuu apumetodia addDirectedEdge. Suunnatulle verkolle metodia kutsutaan kerran, suuntaamattomalle kahdesti, sillä lisätään reunat molempiin suuntiin. Apumetodissa luodaan reuna, joka sisältää tiedon lähtö- ja lopetusvertexeistä. Tämän jälkeen haetaan lähtönoden edgelista (metodilla getEdges()), lisätään edge tälle listalle, ja lisätään päivitetty lista graafiin. Operaatiot getEdges, edgen lisääminen listalle ja listan lisääminen graafiin ovat kaikki aikakompleksisuudeltaan O(1). Näin ollen usealle alkiolle reunojen lisäämisen aikakompleksisuus on O(E). Reunoja lisättäessä tarvitaan aina tieto aloitus- ja lopetusvertexeistä. Oikea vertex haetaankin metodilla getVertexFor, jossa käydään kaikki graafin vertexit läpi, kunnes oikea koodari löytyy. Tämän jälkeen haetaan  vertexiin yhteydessä olevat muut solmut, ja haetaan niille oikeat vertexit. Tämän jälkeen voidaan lisätä reuna vertexistä siihen yhteydessä oleviin vertexeihin. Operaation getVertexFor() aikakompleksisuus hitaammalla toteutuksella on O(V). Lisäämisen kokonaisaikakompleksisuudeksi saadaan nyt vertexien luomisen aikakompleksisuus O(V), oikean vertexin hakeminen O(V), vertexiin yhteydessä olevien vertexien hakeminen O(V) ja reunojen lisääminen O(E). Nyt siis kokonaisaikakompleksisuus lisäämiselle on O(V^3 + E).
+
+Kun getVertexFor-metodia parannetaan lisäämällä graafiin toinen hashTable, joka sisältää tiedon kaikista vertexeistä (value) ja niiden avaimina on vertexin elementin hash, saadaan aikatehokkuutta parannettua merkittävästi. Nyt getVertexFor()-metodissa ainoastaan haetaan hashia vastaava elementti uudesta hashTablesta, ja tämän operaation aikakompleksisuus on O(1). Usean alkion aikakompleksisuudeksi saadaan siis O(V). Kun otetaan huomioon myös reunojen lisääminen, on kokonaisaikakompleksisuus lisäämiselle nyt O(V + E), mikä on teorian mukainen.
+
+Mittausdatan perusteella verkko on harva, sillä reunojen määrä kasvaa lineaarisesti vertexien määrän suhteessa. Tällöin reunojen määrän voidaan ajatella olevan suhteellisen pieni vertexien määrään nähden. Tiheä verkko olisi, jos reunojen määrä kasvaisi esimerkiksi neliöllisesti. Alla oleva kuvaaja kuvaa reunojen määrän kasvua suhteessa aineiston koon kasvuun.
+
+![Reunojen määrä](image-43.png)
+
+Koska verkko on mittausdatan perusteella harva, on reunuslista oikea ratkaisu. Harvalla verkolla suurin osa matriisista olisi tyhjä, mikä vie turhaan ylimääräistä muistia.
+
+Mittausten perusteella hashMap oli graafin täyttämisessä tehokkaampi tietorakenne (täyttöaika 100 000 aineistolla 692 308 ms) kuin hashTable (752 073 ms). Hakuaika oli kuitenkin hashTablella selkeästi parempi (10 000 aineistolla BFS 17 386 ms ja DFS 15001 ms) kuin hashMapilla (BFS 22 614 ms ja DFS 20 146 ms).
+
+
+Testidatan perusteella luotuja graafeja:
+
+Täyttöaika suhteessa aineiston määrään
+
+Hashtable:
+![Täyttöaika hashtable](image-42.png)
+
+Parannettu toteutus (hashtable):
+![Täyttöaika parannetulla toteutuksella](image-40.png)
+
+HashMap:
+![Täyttöaika hashmap](image-41.png)
+
+Hakuajat eri algoritmeilla suhteessa aineiston määrään. Testin suoritus ei onnistunut suurilla aineistoilla, sillä hakuajat olivat niin pitkiä. Näin ollen suurin aineistokoko hakuajan testaamisessa oli 10 000.
+
+Hashtable:
+![Hakuajat hashtable](image-36.png)
+
+HashMap:
+![Hakuajat hashmap](image-38.png)
