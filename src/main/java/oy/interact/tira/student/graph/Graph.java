@@ -200,7 +200,6 @@ public class Graph<T> {
     */
    public List<Vertex<T>> depthFirstSearch(Vertex<T> from, Vertex<T> target) {
       List<Vertex<T>> visited = new ArrayList<>();
-      // return DFS(from, target, visited);
       List<Edge<T>> neighborEdges = new ArrayList<>();
       Set<Vertex<T>> pushed = new HashSet<Vertex<T>>();
       StackImplementation<Vertex<T>> stack = new StackImplementation<Vertex<T>>();
@@ -227,19 +226,6 @@ public class Graph<T> {
       }
       return visited;
    }
-
-   // public List<Vertex<T>> DFS(Vertex<T> from, Vertex<T> target, List<Vertex<T>> visited) {
-   //    visited.add(from);
-   //    List<Edge<T>> neighborEdges = getEdges(from);
-   //    for (Edge<T> edge : neighborEdges) {
-   //       Vertex<T> nextVertex = edge.getDestination();
-   //       if (!visited.contains(nextVertex)) {
-   //          DFS(nextVertex, target, visited);
-   //       }
-   //    }
-   //    return visited;
-   // }
-
    
    /**
     * Returns a non-empty list if the graph is disconnected. A disconnected graph is a
