@@ -3,6 +3,7 @@ package oy.interact.tira.factories;
 import oy.interact.tira.model.Coder;
 import oy.interact.tira.student.QueueImplementation;
 import oy.interact.tira.student.StackImplementation;
+import oy.interact.tira.student.LinkedListQueue;
 import oy.interact.tira.util.QueueInterface;
 import oy.interact.tira.util.StackInterface;
 
@@ -13,7 +14,7 @@ public class QueueFactory {
 	}
 
 	public static QueueInterface<Integer> createIntegerQueue() {
-		return new QueueImplementation<Integer>();
+		return new LinkedListQueue<Integer>();
 	}
 
 	public static QueueInterface<Integer> createIntegerQueue(int capacity) {
@@ -21,7 +22,7 @@ public class QueueFactory {
 	}
 
 	public static QueueInterface<String> createStringQueue() {
-		return new QueueImplementation<String>();
+		return new LinkedListQueue<String>();
 	}
 
 	public static QueueInterface<String> createStringQueue(int capacity) {

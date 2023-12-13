@@ -185,6 +185,8 @@ Jos lainausmerkit tekstissä ovat väärin, ei algoritmin sulkujenlaskenta toimi
 
 Tehtävä opetti minulle jono-tietorakenteen luomisen javalla. Jonon toimintaperiaate oli minulle jo ennestään tuttu, joten sen opettelemiseen ei tarvinnut käyttää aikaa. Haasteita tuotti reallocate ja toString -metodit, joita en meinannut ensin saada menemään testeistä läpi (erityisesti printTest()). Lopulta kuitenkin pitkän debuggauksen jälkeen löysin ongelman (headin ja tailin resetointi puuttui clear() -metodissa) ja sain sen ratkaistua.
 
+Toteutin tehtävässä sekä taulukkopojkaisen toteutuksen, että linkitetyn listan.
+
 Linkitettyyn listaan voidaan lisätä ja poistaa solmuja dynaamisesti tarpeen mukaan. Tämän vuoksi se voi olla muistikompleksisuudeltaan tehokkaampi kuin jono erityisesti silloin, kun ei tiedetä ennalta kuinka paljon tilaa tarvitaan. Toisaalta jos tarvittava muisti on tiedossa jo ennalta, voidaan taulukko luoda suoraan oikeaan kokoon ja tällöin se voittaa linkitetyn listan muistikompleksisuudessa.
 
 Linkitetyssä listassa alkioiden lisääminen ja poistaminen on aikakompleksisuuden kannalta tehokasta missä tahansa kohden listaa. Taulukkopohjaisessa toteutuksessa lisättäessä keskelle listaa joudutaan tekemään tiedonsiirtoa, joka ei ole aikatehokasta. Linkitetty lista voittaa siis taulukkopohjaisen ratkaisun, kun lisäyksiä tai poistoja tehdään listan keskeltä, ja taulukkopohjainen kun operoidaan taulukon reunoilla, eli esimerkiksi tässä tehtävässä toteutettu FIFO.
@@ -455,9 +457,6 @@ Koska verkko on mittausdatan perusteella harva, on reunuslista oikea ratkaisu. H
 
 Mittausten perusteella hashMap oli graafin täyttämisessä tehokkaampi tietorakenne (täyttöaika 100 000 aineistolla 692 308 ms) kuin hashTable (752 073 ms). Hakuaika oli kuitenkin hashTablella selkeästi parempi (10 000 aineistolla BFS 17 386 ms ja DFS 15001 ms) kuin hashMapilla (BFS 22 614 ms ja DFS 20 146 ms).
 
-
-Testidatan perusteella luotuja graafeja:
-
 Täyttöaika suhteessa aineiston määrään
 
 Hashtable:
@@ -469,7 +468,7 @@ Parannettu toteutus (hashtable):
 HashMap:
 ![Täyttöaika hashmap](image-41.png)
 
-Hakuajat eri algoritmeilla suhteessa aineiston määrään. Testin suoritus ei onnistunut suurilla aineistoilla, sillä hakuajat olivat niin pitkiä. Näin ollen suurin aineistokoko hakuajan testaamisessa oli 10 000.
+Hakuajat eri algoritmeilla suhteessa aineiston määrään. Testin suoritus ei onnistunut suurilla aineistoilla, sillä hakuajat olivat niin pitkiä. Näin ollen suurin aineistokoko hakuajan testaamisessa oli 10 000. 
 
 Hashtable:
 ![Hakuajat hashtable](image-36.png)
