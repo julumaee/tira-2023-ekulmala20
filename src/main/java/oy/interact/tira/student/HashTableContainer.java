@@ -33,7 +33,7 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
         maxProbingCount = 0;
         count = 0;
         for (int index = 0; index < oldCapacity; index++) {
-            if (oldArray[index] != null) {
+            if (oldArray[index] != null && !oldArray[index].isRemoved()) {
                 add(oldArray[index].getKey(), oldArray[index].getValue());
             }
         }
@@ -53,7 +53,7 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
             int hash = key.hashCode();
             do {
                 index = indexFor(hash, hashModifier);
-                if (itemArray[index] == null) {
+                if (itemArray[index] == null || itemArray[index].isRemoved()) {
                     itemArray[index] = new Pair<>(key, value);
                     added = true;
                     count++;
@@ -82,8 +82,10 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
             int hashModifier = 0;
             do {
                 index = indexFor(hash, hashModifier);
-                if (itemArray[index] == null) {
+                if (itemArray[index] == null || itemArray[index].isRemoved()) {
                     return null; // Item not found with given key
+                } else if (itemArray[index].isRemoved()) {
+                    return null; // Item removed
                 } else if (itemArray[index].getKey().equals(key)) {
                     return itemArray[index].getValue(); // Item found
                 } else {
@@ -96,7 +98,7 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
     @Override
 	public V find(Predicate<V> searcher) {
         for (int index = 0; index < capacity(); index++) {
-            if (itemArray[index] != null) {
+            if (itemArray[index] != null && !itemArray[index].isRemoved()) {
                 if (searcher.test(itemArray[index].getValue())) {
                     return itemArray[index].getValue();
                 }
@@ -150,7 +152,7 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
         toArray = (Pair<K, V> []) new Pair[size()];
         int toIndex = 0;
         for (int index = 0; index < capacity(); index++) {
-            if (itemArray[index] != null) {
+            if (itemArray[index] != null && !itemArray[index].isRemoved()) {
                 toArray[toIndex] = itemArray[index];
                 toIndex++;
             }
@@ -170,7 +172,30 @@ public class HashTableContainer<K extends Comparable<K>,V> implements TIRAKeyedC
 	 */
     @Override
 	public V remove(K key) throws IllegalArgumentException {
-        return null;
+        if (key == null) {
+            throw new IllegalArgumentException("Trying to remove with null key!");
+        } else {
+            int index = 0;
+            int hash = key.hashCode();
+            int hashModifier = 0;
+            do {
+                index = indexFor(hash, hashModifier);
+                if (itemArray[index] == null) {
+                    return null; // Item not found with given key
+                } else if (itemArray[index].getKey().equals(key)) {
+                    if (itemArray[index].isRemoved()) {
+                        return null;
+                    } else {
+                        V valueToReturn = itemArray[index].getValue();
+                        itemArray[index].setRemoved();
+                        count--;
+                        return valueToReturn;
+                    }
+                } else {
+                    hashModifier++;
+                    }
+                } while (true);
+        }
     }
 
 }
